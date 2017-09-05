@@ -56,7 +56,13 @@
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="jdbcDataSoure"/>
 		<property name="mapperLocations" value="classpath:com/zhibolg/zhibo/*.xml"/>
-		<property name="configLocation" value="classpath:mybatis-config.xml"/>	
+		
+        <!--此处是新增的分页拦截器-->
+		<property name="plugins">
+        <array>
+            <bean class="com.zhibolg.Interceptor.MyIntercepotr"/>
+        </array>
+      </property>
 	</bean>
 	
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
