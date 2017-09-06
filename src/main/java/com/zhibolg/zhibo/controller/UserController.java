@@ -1,7 +1,10 @@
 package com.zhibolg.zhibo.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.zhibolg.base.ControllerBase;
 import com.zhibolg.zhibo.entity.User;
 import com.zhibolg.zhibo.service.UserService;
 
@@ -21,7 +25,8 @@ import com.zhibolg.zhibo.service.UserService;
 */
 @Controller
 @RequestMapping(value = "user")
-public class UserController {
+public class UserController extends ControllerBase{
+	private static Log logger = LogFactory.getLog(UserController.class);
 	
 	@Autowired
 	private UserService userService;
@@ -34,14 +39,9 @@ public class UserController {
 		return userService.get(id);
 	}
 	
-	@RequestMapping(value = "")
-	public void list(User user){
-	}
-	
 	@RequestMapping(value = "save")
 	public String save(User user){
 		userService.insert(user);
-		
 		return "redirect:/ZhiBo.html";  
 	}
 
@@ -64,7 +64,31 @@ public class UserController {
 		User user = new User();
 		user.setUserName(userName);
 		User u = userService.get(user);
-		return u==null ? "false" : "true";
+		return u == null ? "false" : "true";
+	}
+	
+	/*
+	 * 用户名登陆
+	 */
+	@RequestMapping(value = "loginUser")
+	@ResponseBody
+	public String loginUser(User user,HttpServletRequest request){
+		User u = userService.loginYZ(user);
+		boolean flag = u == null ? false : true;
+		if (flag) {
+			setSessionUser(request, user);
+		}
+		return flag ? "true" : "false";
+	}
+	
+	
+	/*
+	 * 用户注销
+	 */
+	@RequestMapping(value = "logoutUser")
+	public String logoutUser(HttpServletRequest request){
+		logoutSessionUser(request);
+		return "redirect:/ZhiBo.html"; 
 	}
 	
 }

@@ -2,6 +2,8 @@ package com.zhibolg.base;
 
 import java.util.List;
 
+import com.zhibolg.zhibo.entity.User;
+
 public interface DaoBase<T> {
 	
 	/**
@@ -46,4 +48,5 @@ public interface DaoBase<T> {
 	 * @return
 	 */
 	public int delete(T entity);
+
 }

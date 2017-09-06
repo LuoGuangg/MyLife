@@ -29,7 +29,7 @@ public class User extends EntityBase<User>{
 		return userPwd;
 	}
 	public void setUserPwd(String userPwd) {
-		this.userPwd = DigestUtils.md5Hex("admin"); 
+		this.userPwd = DigestUtils.md5Hex(userPwd); 
 	}
 	public String getEmail() {
 		return email;

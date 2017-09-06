@@ -63,10 +63,21 @@
 			 -->
 			<!-- 会员登录 -->
 			<div class="member">
-				<p>会员中心</p>
+				<c:if test="${! not empty User_session}">
+					<p>会员中心</p>
+				</c:if>
+				<c:if test="${not empty User_session}">
+					<p>${User_session.userName}</p>
+				</c:if>
 				<ul>
 					<li><img src="${ctxResources}/img/huiyuan1.png" alt="">
-						<a href="javascript:void(0)" onclick="login();">登录</a></li>
+					<c:if test="${! not empty User_session}">
+						<a href="#" onclick="login();">登录</a>
+					</c:if>
+					<c:if test="${not empty User_session}">
+						<a href="user/logoutUser.html">注销</a>
+					</c:if>
+					</li>
 					<li><img src="${ctxResources}/img/huiyuan1.png" alt="">
 						<a href="#" onclick="register();">新会员注册</a></li>
 				</ul>
@@ -146,15 +157,35 @@
 			  ,anim: 1 //0-6的动画形式，-1不开启
 			  ,content: '<div class="register">'+
 			  				'<form:form modelAttribute="user" method="post" action="user/save.html" onsubmit="return checkRegister();">'+
-			  					'<form:input path="userName" id="userName" placeholder="账号：" onblur="userNameMouseOver();" value = "admin" /><div id="userName_div"></div><br />'+
-			  					'<form:password path="userPwd" id="passWord" placeholder="密码：" onblur="passWordMouseOver();" value = "admin"/><div id="passWord_div"></div><br />'+
-			  					'<input type="password" id="passWord2" placeholder="确认密码：" onblur="passWord2MouseOver();" value = "admin"/><div id="passWord2_div"></div><br />'+
-			  					'<form:input path="email" id="email" placeholder="邮箱："  onblur="emailMouseOver();" value = "admin@qq.com"/><div id="email_div"></div><br />'+
+			  					'<form:input path="userName" id="userName" placeholder="账号：" onblur="userNameMouseOver();" /><div id="userName_div"></div><br />'+
+			  					'<form:password path="userPwd" id="passWord" placeholder="密码：" onblur="passWordMouseOver();" /><div id="passWord_div"></div><br />'+
+			  					'<input type="password" id="passWord2" placeholder="确认密码：" onblur="passWord2MouseOver();" /><div id="passWord2_div"></div><br />'+
+			  					'<form:input path="email" id="email" placeholder="邮箱："  onblur="emailMouseOver();" /><div id="email_div"></div><br />'+
 			  					'<input type="submit" id="passWord" value="注册" /><br />'+
 			  				'</form:form>'+
 			  			'</div>'
 			});    
-		} 
+		
+		}
+			
+		function login(){
+			layer.open({
+			  type: 1 //Page层类型
+			  ,area: ['600px', '280px']
+			  ,title: '登陆'
+			  ,shade: 0.6 //遮罩透明度
+			  ,maxmin: true //允许全屏最小化
+			  ,anim: 1 //0-6的动画形式，-1不开启
+			  ,content: '<div class="register">'+
+			  				'<form:form modelAttribute="user" method="post" action="ZhiBo.html" onsubmit="return checkLogin();">'+
+			  					'<form:input path="userName" id="userNameLogin" placeholder="账号：" onblur="userNameLoginMouseOver();" /><div id="userNameLogin_div"></div><br />'+
+			  					'<form:password path="userPwd" id="passWordLogin" placeholder="密码：" onblur="passWordLoginMouseOver();" /><div id="passWordLogin_div"></div><br />'+
+			  					'<input type="submit" id="passWord" value="登陆" /><div id="login_div"></div><br />'+
+			  				'</form:form>'+
+			  			'</div>'
+			}); 
+		}
+	
 	</script>
 	<script src="${ctxResources}/js/zhibo/zhibo.js"></script>
 </body>

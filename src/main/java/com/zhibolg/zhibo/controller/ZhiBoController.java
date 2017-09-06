@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.zhibolg.base.ControllerBase;
 import com.zhibolg.zhibo.entity.Page;
 import com.zhibolg.zhibo.entity.User;
 import com.zhibolg.zhibo.entity.ZhiBo;
@@ -17,7 +18,7 @@ import com.zhibolg.zhibo.service.ZhiBoService;
 
 @Controller
 @RequestMapping(value = "ZhiBo")
-public class ZhiBoController {
+public class ZhiBoController extends ControllerBase{
 
 	@Autowired
 	private ZhiBoService ZhiBoService;

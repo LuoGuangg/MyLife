@@ -32,6 +32,17 @@
 		</where>
 	</select>
 	
+	
+	<select id="loginYZ" resultType="com.zhibolg.zhibo.entity.User">
+		SELECT 
+			<include refid="userColumns"/> 
+		FROM user a
+		<where>
+			a.userName = #{userName}
+			AND a.userPwd = #{userPwd}
+		</where>
+	</select>
+	
 	<update id="update">
 		UPDATE user SET
 			userName = #{userName},

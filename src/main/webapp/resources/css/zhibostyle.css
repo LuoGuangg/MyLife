@@ -146,4 +146,27 @@
     color: red;
 }
 
+.register #userNameLogin_div{
+	position: absolute;
+    top: 20px;
+    left: 370px;
+    font-size: 12px;
+    color: red;
+}
+.register #passWordLogin_div{
+	position: absolute;
+    top: 70px;
+    left: 370px;
+    font-size: 12px;
+    color: red;
+}
+
+.register #login_div{
+	position: absolute;
+    top: 20px;
+    left: 370px;
+    font-size: 12px;
+    color: red;
+}
+
 
