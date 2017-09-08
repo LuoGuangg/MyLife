@@ -31,7 +31,14 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-
+	
+	<!-- 获取Request -->
+	<listener>
+        <listener-class>
+            org.springframework.web.context.request.RequestContextListener
+        </listener-class>
+    </listener>
+    
 	<!-- SpringMVC -->
 	<servlet>
 		<servlet-name>springDispatcherServlet</servlet-name>

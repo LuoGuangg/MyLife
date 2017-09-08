@@ -3,13 +3,22 @@ package com.zhibolg.base;
 
 import java.util.Date;
 
-import org.springframework.transaction.annotation.Transactional;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import com.zhibolg.zhibo.controller.UserController;
 import com.zhibolg.zhibo.entity.Page;
 import com.zhibolg.zhibo.entity.User;
 
 @Transactional(readOnly = true)
-public abstract class EntityBase<T> {
+public abstract class EntityBase<T> extends ControllerBase{
+	private Log logger = LogFactory.getLog(EntityBase.class);
 	
 	public static final String DEL_FLAG_NORMAL = "0";//0：正常
 	public static final String DEL_FLAG_DELETE = "1";//1：删除
@@ -30,9 +39,13 @@ public abstract class EntityBase<T> {
 	private String delFlag; 	// 删除标记（0：正常；1：删除；）
 
 	public EntityBase() {
+		
 		this.setDelFlag(DEL_FLAG_NORMAL);
 	}
-	
+	public EntityBase(String id) {
+		this();
+		this.id = id;
+	}
 	public User getCreateBy() {
 		return createBy;
 	}

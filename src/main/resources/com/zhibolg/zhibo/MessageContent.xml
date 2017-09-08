@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhibolg.zhibo.dao.MessageContentDao">
+	
+	<sql id="messageContentColumns">
+		a.id AS "id",
+		a.gameId AS "gameId",
+		a.content AS "content",
+		a.create_by AS "create_by.id",
+		a.create_date AS "create_date",
+		a.update_by AS "update_by.id",
+		a.update_date AS "update_date",
+		a.delFlag AS "delFlag"	
+	</sql>
+	
+	<select id="findList" resultType="com.zhibolg.zhibo.entity.MessageContent">
+		SELECT 
+			<include refid="messageContentColumns"/> 
+		FROM message_content a
+	</select>
+	
+	<select id="get" resultType="com.zhibolg.zhibo.entity.MessageContent">
+		SELECT 
+			<include refid="messageContentColumns"/> 
+		FROM message_content a
+		<where>
+			<if test="id != '' and id != null">
+				a.id = #{id}
+			</if>
+		</where>
+	</select>
+	
+
+	
+	<update id="update">
+		UPDATE message_content SET
+			gameId = #{gameId},
+			content = #{content},
+			update_by = #{update_by.id},
+			update_date = #{update_date}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE message_content SET
+			delFlag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	<insert id="insert">
+		INSERT INTO message_content(
+			id,
+			gameId,
+			content,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag
+		) VALUE (
+			#{id},
+			#{gameId},
+			#{content},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{delFlag}
+		)
+	</insert>
+
+</mapper>

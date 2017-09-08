@@ -26,6 +26,7 @@ public class ControllerBase{
 	 */
 	protected void setSessionUser(HttpServletRequest request,User user){
 		request.getSession().setAttribute("User_session", user);
+		request.getSession().setAttribute("userId", user.getId());
 	}
 	
 	/*
@@ -34,5 +35,14 @@ public class ControllerBase{
 	protected void logoutSessionUser(HttpServletRequest request){
 		request.getSession().removeAttribute("User_session");
 	}
+	
+	/*
+	 * 获取用户ID
+	 */
+	protected String getSessionUserId(HttpServletRequest request){
+		String id = (String)request.getSession().getAttribute("userId");
+		return id;
+	}
+	
 	
 }

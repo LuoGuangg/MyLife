@@ -1,7 +1,6 @@
 package com.zhibolg.zhibo.entity;
 
 
-import java.util.UUID;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -17,6 +16,11 @@ public class User extends EntityBase<User>{
 	public User() {
 		super();
 	}
+	
+	public User(String id) {
+		super(id);
+	}
+	
 	
 	public String getUserName() {
 		return userName;

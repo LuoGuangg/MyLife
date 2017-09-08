@@ -26,7 +26,7 @@ import com.zhibolg.zhibo.service.UserService;
 @Controller
 @RequestMapping(value = "user")
 public class UserController extends ControllerBase{
-	private static Log logger = LogFactory.getLog(UserController.class);
+	private  Log logger = LogFactory.getLog(UserController.class);
 	
 	@Autowired
 	private UserService userService;
@@ -76,7 +76,8 @@ public class UserController extends ControllerBase{
 		User u = userService.loginYZ(user);
 		boolean flag = u == null ? false : true;
 		if (flag) {
-			setSessionUser(request, user);
+			logger.info("用户登陆："+u);
+			setSessionUser(request, u);
 		}
 		return flag ? "true" : "false";
 	}

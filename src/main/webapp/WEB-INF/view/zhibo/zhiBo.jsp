@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ include file="/WEB-INF/view/include/taglib.jsp"%>
-
-<html>
+<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <title>节奏直播导航间</title>
@@ -12,14 +11,15 @@
 <meta name="content-type" content="text/html; charset=UTF-8">
 <meta name="author" content="lg">
 
-<link rel="stylesheet" type="text/css"
-	href="${ctxResources}/css/head.css">
+<link rel="stylesheet" href="${ctxResources}/css/head.css">
 	
-<link rel="stylesheet" type="text/css"
-	href="${ctxResources}/css/zhibostyle.css">
+<link rel="stylesheet" href="${ctxResources}/css/zhibostyle.css">
 	
-<link rel="stylesheet" type="text/css"
-	href="${ctxResources}/css/zhiboPage.css">
+<link rel="stylesheet" href="${ctxResources}/css/zhiboPage.css">
+	
+<link rel="stylesheet" href="${ctxResources}/css/layui.css">
+	
+	
 </head>
 <body>
 	<form:form id="pageForm" action="ZhiBo.html" method="post">
@@ -52,15 +52,7 @@
 						name="name"> <span class="close_btn"></span>
 				</div>
 			</form:form>
-			<!-- 
-			<form action="ZhiBo.html">
-				<div class="search_main">
-					<button class="search_btn" type="submit"></button>
-					<input class="search_text" type="text" placeholder="搜索"> <span
-						class="close_btn"></span>
-				</div>
-			</form>
-			 -->
+	
 			<!-- 会员登录 -->
 			<div class="member">
 				<c:if test="${! not empty User_session}">
@@ -129,6 +121,31 @@
 				</c:forEach>
 			</ul>
 			<div class="pagination">${page}</div>
+			
+			<div id="rigt_huifu" >
+			  <form class="layui-form" action="message/content/save.html">
+			    <div class="layui-form-item">
+			    
+				    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+					  <legend>回复</legend>
+					</fieldset>
+					
+			        <textarea name="content" id="huifu" class="layui-hide">
+			        </textarea>
+			        
+			        <textarea name="gameId" class="layui-hide" style="display: none" >
+			        	${page.results[0].index}
+			        </textarea>
+			    </div>
+			    <c:if test="${not empty User_session}">
+			    	<button class="layui-btn">提交</button>
+				</c:if>
+			    <a class="layui-btn" id="getChoose">获取选中内容</a>
+			  </form>
+			</div>  
+			
+			
+			
 		</div>
 	</div>
 	
@@ -136,17 +153,40 @@
 	<script src="${ctxResources}/js/jquery-1.8.3.min.js"></script>
 	<script src="${ctxResources}/js/jquery.min.js"></script>
 	<script src="${ctxResources}/js/layer.js"></script>
+	<script src="${ctxResources}/layui.js"></script>
+	
+	<script>
+		layui.use('layedit', function(){
+		  var layedit = layui.layedit;
+		  
+		  var index = layedit.build('huifu', {
+		    //hideTool: ['image']
+		    uploadImage: {
+		      url: 'json/upload/demoLayEdit.json'
+		      ,type: 'get'
+		    }
+		    //,tool: []
+		    //,height: 100
+		  });
+		  
+		  getChoose.onclick = function(){
+		    alert(layedit.getSelection(index));
+		  };
+		  
+		});
+	</script>
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
-			//console.log($(document).height());
-			$("body:eq(0)").height($(document).height());
+			console.log($(document).height());
+			$("body:eq(0)").height($(document).height()+325);
 			var inx = ${page.results[0].index}
 			var index = 'li' + inx
 			$('#' + index).attr("class", "hover")
+			
 		});
 		
-
+		
 		function register(){
 			layer.open({
 			  type: 1 //Page层类型
@@ -188,5 +228,6 @@
 	
 	</script>
 	<script src="${ctxResources}/js/zhibo/zhibo.js"></script>
+	<script src="${ctxResources}/js/zhibo/message.js"></script>
 </body>
 </html>

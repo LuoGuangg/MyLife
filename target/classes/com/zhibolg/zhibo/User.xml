@@ -9,6 +9,10 @@
 		a.userPwd AS "userPwd",
 		a.email AS "email",
 		a.power AS "power",
+		a.create_by AS "create_by.id",
+		a.create_date AS "create_date",
+		a.update_by AS "update_by.id",
+		a.update_date AS "update_date",
 		a.delFlag AS "delFlag"	
 	</sql>
 	
@@ -47,14 +51,16 @@
 		UPDATE user SET
 			userName = #{userName},
 			userPwd = #{userPwd},
-			email = #{email}
+			email = #{email},
+			update_by = #{update_by.id},
+			update_date = #{update_date}
 		WHERE id = #{id}
 	</update>
 	
 	<update id="delete">
 		UPDATE user SET
-			delFlag = #{userName}
-		WHERE id = #{DEL_FLAG_DELETE}
+			delFlag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
 	</update>
 	
 	<insert id="insert">
@@ -64,6 +70,10 @@
 			userPwd,
 			email,
 			power,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
 			delFlag
 		) VALUE (
 			#{id},
@@ -71,6 +81,10 @@
 			#{userPwd},
 			#{email},
 			#{power},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
 			#{delFlag}
 		)
 	</insert>
