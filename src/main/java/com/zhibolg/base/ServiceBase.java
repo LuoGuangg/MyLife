@@ -50,8 +50,9 @@ public abstract class ServiceBase<D extends DaoBase<T>,T extends EntityBase<T>>{
 		entity.setUpdateDate(d);
 		entity.setCreateBy(user);
 		entity.setUpdateBy(user);
+		
 		entity.setId(UUID.randomUUID().toString().replace("-", ""));
-		System.out.println(entity+"entity");
+		
 		return dao.insert(entity);
 	}
 	

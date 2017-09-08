@@ -40,7 +40,9 @@ $(function() {
 function ZhiBoTiao(i) {
 	window.location.href = "ZhiBo.html?index=" + i;
 }
-
+/*
+ * 直播间分页
+ */
 function page(n, s, i) {
 	$("#pageNo").val(n);
 	$("#pageSize").val(s);
@@ -48,6 +50,18 @@ function page(n, s, i) {
 	$("#pageForm").submit();
 	return false;
 }
+
+/*
+ * 留言板分页
+ */
+function liuYanpage(n, s, i) {
+	$("#liuYanpageNo").val(n);
+	$("#liuYanpageSize").val(s);
+	$("#liuYanindex").val(i);
+	$("#liuYanpageForm").submit();
+	return false;
+}
+
 //注册用户名验证
 function userNameMouseOver(){
 	userName = $("#userName").val()
@@ -85,10 +99,10 @@ function userNameMouseOver(){
 //注册密码验证
 function passWordMouseOver(){
 	passWord = $("#passWord").val()
-	var regex = new RegExp('(?=.*[a-zA-Z]).{4,20}')
+	var regex = new RegExp('(?=.*[a-zA-Z0-9]).{4,20}')
 	console.log(regex.test(passWord))
 	if (!regex.test(passWord)) {
-		$("#passWord_div").html("密码必须在4-20字符之间")
+		$("#passWord_div").html("密码必须是数字+字母,在4-20字符之间")
 	}else {
 		$("#passWord_div").html("")
 	}

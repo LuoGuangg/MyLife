@@ -40,9 +40,9 @@ public class UserController extends ControllerBase{
 	}
 	
 	@RequestMapping(value = "save")
-	public String save(User user){
+	public String save(User user,@RequestParam(required=false) String gameId){
 		userService.insert(user);
-		return "redirect:/ZhiBo.html";  
+		return "redirect:/ZhiBo.html?index="+gameId;  
 	}
 
 	@RequestMapping(value = "update")

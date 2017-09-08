@@ -1,5 +1,7 @@
 package com.zhibolg.zhibo.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,18 +17,30 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.zhibolg.base.ControllerBase;
+import com.zhibolg.zhibo.entity.MessageAll;
 import com.zhibolg.zhibo.entity.Page;
 import com.zhibolg.zhibo.entity.User;
 import com.zhibolg.zhibo.entity.ZhiBo;
+import com.zhibolg.zhibo.service.MessageAllService;
 import com.zhibolg.zhibo.service.ZhiBoService;
+import com.zhibolg.zhibo.util.UserUtil;
 
 @Controller
 @RequestMapping(value = "ZhiBo")
 public class ZhiBoController extends ControllerBase{
 	private static Log logger = LogFactory.getLog(UserController.class);
 
+	/*
+	 * 获取直播间信息
+	 */
 	@Autowired
 	private ZhiBoService ZhiBoService;
+	
+	/*
+	 * 获取留言信息
+	 */
+	@Autowired
+	private MessageAllService messageAllService;
 
 	@ModelAttribute
 	public Page<ZhiBo> get(@RequestParam(required = false) String index,@RequestParam(required=false) String name, HttpServletRequest request,
@@ -46,13 +60,19 @@ public class ZhiBoController extends ControllerBase{
 	}
 
 	@RequestMapping(value = "")
-	public String ZhiBo(Page<ZhiBo> page, Model model) {
+	public String ZhiBo(Page<ZhiBo> page, Model model,@RequestParam(required=false) String gameId) {
 		
-		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
-		User u = getSessionUser(request);
-		logger.info(u);
+		User user = UserUtil.getUser();
+		model.addAttribute("user", user);
+		
+		/*
+		 * 获取所有留言信息
+		 */
+		List<MessageAll> messageAllList = messageAllService.findListByGameId(Integer.parseInt(page.getPageMap().get("index")));
+		model.addAttribute("messageAllList", messageAllList);
+		
 		model.addAttribute("page", page);
-		model.addAttribute("user", new User());
-		return "zhibo/zhiBo";
+	
+		return gameId == null ? "zhibo/zhiBo" : "redirect:/ZhiBo.html?index="+gameId;
 	}
 }

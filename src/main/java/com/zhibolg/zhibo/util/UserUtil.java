@@ -27,6 +27,9 @@ public class UserUtil {
 		UserService userService = (UserService)ac.getBean("userService");
 		User user = new User();
 		user.setId(userId);
+		if (userId == null || userId == ""){
+			return user;
+		}
 		return userService.get(user);
 	}
 }

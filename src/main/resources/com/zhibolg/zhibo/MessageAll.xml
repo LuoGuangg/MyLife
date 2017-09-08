@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhibolg.zhibo.dao.MessageAllDao">
+	
+	<sql id="messageAllColumns">
+		a.id AS "id",
+		a.contentId AS "contentId",
+		a.targetId AS "targetId",
+		a.create_by AS "create_by.id",
+		a.create_date AS "create_date",
+		a.update_by AS "update_by.id",
+		a.update_date AS "update_date",
+		a.del_Flag AS "delFlag"	
+	</sql>
+	
+	<select id="findList" resultType="com.zhibolg.zhibo.entity.MessageAll">
+		SELECT 
+			<include refid="messageAllColumns"/> 
+		FROM message_all a
+	</select>
+	
+	<select id="findListByGameId" resultType="com.zhibolg.zhibo.entity.MessageAll" parameterType="Integer">
+		SELECT 
+			<include refid="messageAllColumns"/> ,c.userName,b.content,b.create_date AS contentDate
+		FROM message_content b , message_all a , user c 
+		<where>
+			b.del_flag = '0'
+			AND 
+			a.contentId = b.id 
+			AND
+			b.gameId = #{gameId}
+			AND 
+			a.create_by = c.id 
+			
+			order by a.create_date desc
+		</where>
+		
+	</select>
+	
+	<select id="get" resultType="com.zhibolg.zhibo.entity.MessageAll">
+		SELECT 
+			<include refid="messageAllColumns"/> 
+		FROM message_content a
+		<where>
+			<if test="id != '' and id != null">
+				a.id = #{id}
+			</if>
+		</where>
+	</select>
+	
+
+	
+	<update id="delete">
+		UPDATE message_all SET
+			delFlag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	<insert id="insert">
+		INSERT INTO message_all(
+			id,
+			contentId,
+			targetId,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag
+		) VALUE (
+			#{id},
+			#{contentId},
+			#{targetId},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{delFlag}
+		)
+	</insert>
+
+</mapper>

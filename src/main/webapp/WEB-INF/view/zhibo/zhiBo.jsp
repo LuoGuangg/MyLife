@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ include file="/WEB-INF/view/include/taglib.jsp"%>
-<!DOCTYPE html>
+<html>
 <head>
 <meta charset="UTF-8">
 <title>节奏直播导航间</title>
@@ -18,6 +18,8 @@
 <link rel="stylesheet" href="${ctxResources}/css/zhiboPage.css">
 	
 <link rel="stylesheet" href="${ctxResources}/css/layui.css">
+	
+<link rel="stylesheet" href="${ctxResources}/css/message.css">
 	
 	
 </head>
@@ -123,11 +125,11 @@
 			<div class="pagination">${page}</div>
 			
 			<div id="rigt_huifu" >
-			  <form class="layui-form" action="message/content/save.html">
+			  <form class="layui-form" action="message/content/save.html" method="POST">
 			    <div class="layui-form-item">
 			    
 				    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
-					  <legend>回复</legend>
+					  <legend>留言</legend>
 					</fieldset>
 					
 			        <textarea name="content" id="huifu" class="layui-hide">
@@ -140,9 +142,22 @@
 			    <c:if test="${not empty User_session}">
 			    	<button class="layui-btn">提交</button>
 				</c:if>
-			    <a class="layui-btn" id="getChoose">获取选中内容</a>
+			    
+			    <c:if test="${!not empty User_session}">
+			    	<div class="rigt_huifu_noLogin">请先进行登陆在进行发言！</div>
+				</c:if>
 			  </form>
-			</div>  
+			</div>
+			
+			<c:forEach items="${messageAllList}" var="messageAll">
+				<div id="liuyan_div">
+					<div class="username_div">用户名:${messageAll.userName}</div>
+					<div class="content_div">${messageAll.content}</div>
+					<div class="time_div">时间：${messageAll.contentDate}</div>
+					
+					<div class="fenge_div"></div>
+				</div>
+			</c:forEach>  
 			
 			
 			
@@ -168,10 +183,6 @@
 		    //,tool: []
 		    //,height: 100
 		  });
-		  
-		  getChoose.onclick = function(){
-		    alert(layedit.getSelection(index));
-		  };
 		  
 		});
 	</script>
@@ -201,6 +212,7 @@
 			  					'<form:password path="userPwd" id="passWord" placeholder="密码：" onblur="passWordMouseOver();" /><div id="passWord_div"></div><br />'+
 			  					'<input type="password" id="passWord2" placeholder="确认密码：" onblur="passWord2MouseOver();" /><div id="passWord2_div"></div><br />'+
 			  					'<form:input path="email" id="email" placeholder="邮箱："  onblur="emailMouseOver();" /><div id="email_div"></div><br />'+
+			  					'<input type="hidden" id="gameId" name="gameId"  value="${page.results[0].index}" />'+
 			  					'<input type="submit" id="passWord" value="注册" /><br />'+
 			  				'</form:form>'+
 			  			'</div>'
@@ -220,6 +232,7 @@
 			  				'<form:form modelAttribute="user" method="post" action="ZhiBo.html" onsubmit="return checkLogin();">'+
 			  					'<form:input path="userName" id="userNameLogin" placeholder="账号：" onblur="userNameLoginMouseOver();" /><div id="userNameLogin_div"></div><br />'+
 			  					'<form:password path="userPwd" id="passWordLogin" placeholder="密码：" onblur="passWordLoginMouseOver();" /><div id="passWordLogin_div"></div><br />'+
+			  					'<input type="hidden" id="gameId" name="gameId"  value="${page.results[0].index}" />'+
 			  					'<input type="submit" id="passWord" value="登陆" /><div id="login_div"></div><br />'+
 			  				'</form:form>'+
 			  			'</div>'
