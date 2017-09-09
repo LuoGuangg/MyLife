@@ -47,6 +47,7 @@ public class MessageContentController  extends ControllerBase{
 		
 		MessageAll messageAll = new MessageAll();
 		messageAll.setContentId(messageContent.getId());
+		messageAll.setTargetId(messageContent.getTargetId().trim());
 		messageAllService.insert(messageAll);
 		
 		return "redirect:/ZhiBo.html?index="+messageContent.getGameId();  

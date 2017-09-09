@@ -125,6 +125,7 @@
 			<div class="pagination">${page}</div>
 			
 			<div id="rigt_huifu" >
+			  <!-- 留言 -->
 			  <form class="layui-form" action="message/content/save.html" method="POST">
 			    <div class="layui-form-item">
 			    
@@ -132,7 +133,7 @@
 					  <legend>留言</legend>
 					</fieldset>
 					
-			        <textarea name="content" id="huifu" class="layui-hide">
+			        <textarea name="content" id="liuyan" class="layui-hide">
 			        </textarea>
 			        
 			        <textarea name="gameId" class="layui-hide" style="display: none" >
@@ -140,7 +141,7 @@
 			        </textarea>
 			    </div>
 			    <c:if test="${not empty User_session}">
-			    	<button class="layui-btn">提交</button>
+			    	<button class="layui-btn">留言</button>
 				</c:if>
 			    
 			    <c:if test="${!not empty User_session}">
@@ -149,18 +150,67 @@
 			  </form>
 			</div>
 			
-			<c:forEach items="${messageAllList}" var="messageAll">
-				<div id="liuyan_div">
-					<div class="username_div">用户名:${messageAll.userName}</div>
-					<div class="content_div">${messageAll.content}</div>
-					<div class="time_div">时间：${messageAll.contentDate}</div>
-					
-					<div class="fenge_div"></div>
-				</div>
-			</c:forEach>  
+			<!-- 留言 回复内容 -->
+			<c:forEach items="${messageAllPage.results}" var="messageAll" varStatus="varSta">
+				<c:if test="${messageAll.targetId == '' || messageAll.targetId == null}">
+					<div id="liuyan_div">
+						<div class="username_div">${messageAll.userName}</div>
+						<div class="content_div">${messageAll.content}</div>
+						<div class="time_div">${messageAll.contentDateString}</div>
+						
+						<div class="gn_div">
+							<c:if test="${not empty User_session}">
+								<div class="liuyan_div_gn" onclick="showhuifu('${varSta.index}')">回复</div>
+								<c:if test="${User_session.power == 1}">
+									<div class="liuyan_div_gn" onclick="deleteLiuYan('${messageAll.id}')">删除</div>
+								</c:if>
+							</c:if>
+						</div>
+						
+						 
+						<div class="liuyan_huifu_div">
+						<c:forEach items="${messageHuiFuMap.get(messageAll.contentId)}" var="messageAllhuifu" >
+							<div class="huifu_div">
+								<div class="username_huifu_div"><span class="username_huifu_span">${messageAllhuifu.userName}</span>：  ${messageAllhuifu.content.replace('<p>', '').replace('</p>', '')}</div>
+								<div class="time_huifu_div">${messageAllhuifu.contentDateString}<c:if test="${not empty User_session}"><span class="time_huifu_span" onclick="pinglunDelete('${messageAllhuifu.id}')">删除</span></c:if></div>
+							</div>
+						</c:forEach>
+						</div>
+						
+						<div class="liuyan_div_huifu" id="liuyan_div_huifu${varSta.index}" style="display: none">
+							<!-- 回复 -->
+							<form class="layui-form huifu_form" action="message/content/save.html" method="POST" >
+							  	
+							  	<textarea class="layui-textarea" name="content" id="huifu${varSta.index}" style="display: none"></textarea>
+					    		
+							        <textarea name="gameId" class="layui-hide" style="display: none" >
+							        	${page.results[0].index}
+							        </textarea>
+							        
+							        <textarea name="targetId" class="layui-hide" style="display: none" >
+							        	${messageAll.contentId}
+							        </textarea>
+							        
+					    		<button class="layui-btn">评论</button>
+					    		
+					  		</form>
+					  		
+						</div> 
+						
+						
+						<div class="fenge_div"></div>
+					</div>
+				</c:if>
+			</c:forEach> 
+			 
+			<form:form id="messageAllpageForm" action="ZhiBo.html" method="post">
+				<input id="messageAllpageNo" name="messageAllpageNo" type="hidden" value="${messageAllPage.pageNo}" />
+				<input id="messageAllpageSize" name="messageAllpageSize" type="hidden"
+					value="${messageAllPage.pageSize}" />
+				<input id="messageAllindex" name="index" type="hidden" />
+			</form:form>
 			
-			
-			
+			<div class="pagination messageAllPage">${messageAllPage}</div>
 		</div>
 	</div>
 	
@@ -174,22 +224,32 @@
 		layui.use('layedit', function(){
 		  var layedit = layui.layedit;
 		  
-		  var index = layedit.build('huifu', {
+		  var index = layedit.build('liuyan', {
 		    //hideTool: ['image']
 		    uploadImage: {
 		      url: 'json/upload/demoLayEdit.json'
-		      ,type: 'get'
+		      ,type: 'post'
 		    }
-		    //,tool: []
+		    ,tool: ['strong','italic','underline','del','|','link','face','image']
 		    //,height: 100
 		  });
+		  
+		  for (var i = 0;i < "${messageAllPage.pageSize}";i++){
+			  
+			  var index = layedit.build('huifu'+i);
+			  //自定义工具栏
+			  layedit.build('huifu'+i, {
+			    tool: ['strong','italic','underline','del','face']
+			    ,height: 80
+			  })
+		  }
 		  
 		});
 	</script>
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
-			console.log($(document).height());
+			//console.log($(document).height());
 			$("body:eq(0)").height($(document).height()+325);
 			var inx = ${page.results[0].index}
 			var index = 'li' + inx

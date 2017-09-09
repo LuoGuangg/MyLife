@@ -44,7 +44,7 @@
 	
 	<update id="delete">
 		UPDATE message_content SET
-			delFlag = #{DEL_FLAG_DELETE}
+			del_Flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
 	

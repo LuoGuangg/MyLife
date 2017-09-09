@@ -16,12 +16,6 @@
 	
 	<select id="findList" resultType="com.zhibolg.zhibo.entity.MessageAll">
 		SELECT 
-			<include refid="messageAllColumns"/> 
-		FROM message_all a
-	</select>
-	
-	<select id="findListByGameId" resultType="com.zhibolg.zhibo.entity.MessageAll" parameterType="Integer">
-		SELECT 
 			<include refid="messageAllColumns"/> ,c.userName,b.content,b.create_date AS contentDate
 		FROM message_content b , message_all a , user c 
 		<where>
@@ -29,19 +23,37 @@
 			AND 
 			a.contentId = b.id 
 			AND
-			b.gameId = #{gameId}
+			a.targetId IS NULL 
+			AND
+			b.gameId = #{pageMap.index}
 			AND 
 			a.create_by = c.id 
 			
-			order by a.create_date desc
 		</where>
 		
+		order by a.create_date desc
+	</select>
+	
+	<select id="findListHuiFuByContentId" resultType="com.zhibolg.zhibo.entity.MessageAll" parameterType="String">
+		SELECT 
+			<include refid="messageAllColumns"/> ,c.userName,b.content,b.create_date AS contentDate
+		FROM message_content b , message_all a , user c 
+		<where>
+			b.del_flag = '0'
+			AND 
+			a.contentId = b.id 
+			AND 
+			a.create_by = c.id 
+			AND
+			a.targetId = #{contentId}
+		</where>
+			order by a.create_date desc
 	</select>
 	
 	<select id="get" resultType="com.zhibolg.zhibo.entity.MessageAll">
 		SELECT 
 			<include refid="messageAllColumns"/> 
-		FROM message_content a
+		FROM message_all a
 		<where>
 			<if test="id != '' and id != null">
 				a.id = #{id}
@@ -53,7 +65,7 @@
 	
 	<update id="delete">
 		UPDATE message_all SET
-			delFlag = #{DEL_FLAG_DELETE}
+			del_Flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
 	

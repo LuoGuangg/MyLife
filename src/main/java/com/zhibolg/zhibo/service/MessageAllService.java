@@ -21,7 +21,7 @@ public class MessageAllService  extends ServiceBase<DaoBase<MessageAll>, Message
 	@Autowired
 	private MessageAllDao dao;
 	
-	public List<MessageAll> findListByGameId(int gameId){
-		return dao.findListByGameId(gameId);
+	public List<MessageAll> findListHuiFuByContentId(String contentId){
+		return dao.findListHuiFuByContentId(contentId);
 	}
 }

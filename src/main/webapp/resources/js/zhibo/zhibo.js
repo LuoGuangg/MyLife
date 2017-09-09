@@ -54,11 +54,11 @@ function page(n, s, i) {
 /*
  * 留言板分页
  */
-function liuYanpage(n, s, i) {
-	$("#liuYanpageNo").val(n);
-	$("#liuYanpageSize").val(s);
-	$("#liuYanindex").val(i);
-	$("#liuYanpageForm").submit();
+function messageAllPage(n, s, i) {
+	$("#messageAllpageNo").val(n);
+	$("#messageAllpageSize").val(s);
+	$("#messageAllindex").val(i);
+	$("#messageAllpageForm").submit();
 	return false;
 }
 

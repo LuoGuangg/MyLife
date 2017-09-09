@@ -17,9 +17,8 @@ import com.zhibolg.zhibo.entity.MessageContent;
 public interface MessageAllDao  extends DaoBase<MessageAll>{
 
 	/*
-	 * 通过gameID查找所有留言
-	 * 
+	 * 通过targetId 获取回复
 	 */
-	List<MessageAll> findListByGameId(int gameId);
+	List<MessageAll> findListHuiFuByContentId(String contentId);
 	
 }

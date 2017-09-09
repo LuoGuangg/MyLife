@@ -42,10 +42,14 @@ public class Page<T> {
 	
 	private Map<String, String> pageMap = new HashMap<String, String>();
 
-	public Page(HttpServletRequest request, HttpServletResponse response,String index) {
+	
+	/**
+	 * @param index 直播间分类
+	 * @param no 当前页面
+	 * @param size 总页面
+	 */
+	public Page(String index,String no,String size) {
 		this.pageMap.put("index", index);
-		String no = request.getParameter("pageNo");
-		String size = request.getParameter("pageSize");
 		
 		if(size!=null&&no!=null){
 			this.pageNo = Integer.parseInt(no);

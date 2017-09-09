@@ -23,4 +23,54 @@
 	width: 100%;
 	border: 1px solid #c3c3c3;
 	margin-bottom: 20px;
+	margin-top: 20px;
+}
+
+#rigt .messageAllPage {
+	margin-left: 20px;
+	margin-top: 100px;
+}
+
+#liuyan_div .liuyan_div_gn {
+	margin-right: 20px;
+	float: right;
+	cursor:pointer;
+}
+
+#liuyan_div .gn_div {   
+	padding-bottom: 30px;  
+}
+
+#liuyan_div .username_div {
+	color: #2d64b3;
+}
+
+.liuyan_huifu_div {
+    top: 100px;
+    background-color: #f7f8fa;
+    width: 80%;
+    margin-left: 20%;
+}
+.liuyan_huifu_div .huifu_div {
+	margin-left: 5%;
+	padding: 20px;
+}
+.liuyan_huifu_div .huifu_div .username_huifu_span {
+	color: #2d64b3;
+	
+}
+
+.liuyan_huifu_div .huifu_div .time_huifu_div {
+	margin-left: 70%;
+}
+
+.huifu_form {
+	width: 80%;
+	margin-left: 20%;
+	margin-top: 20px;
+}
+
+.time_huifu_span {
+	cursor:pointer;
+	margin-left: 20px;
 }
