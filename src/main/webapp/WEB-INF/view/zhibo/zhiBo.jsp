@@ -227,10 +227,13 @@
 		  var index = layedit.build('liuyan', {
 		    //hideTool: ['image']
 		    uploadImage: {
-		      url: 'json/upload/demoLayEdit.json'
-		      ,type: 'post'
+		      url: 'message/content/uploadImg.html',
+		      type: 'post',
+		      success: function(res){
+		    	  console.log(res)
+		      }
 		    }
-		    ,tool: ['strong','italic','underline','del','|','link','face','image']
+		    ,tool: ['strong','italic','underline','del','|','link','face']
 		    //,height: 100
 		  });
 		  

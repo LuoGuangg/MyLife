@@ -40,7 +40,9 @@ $(function() {
 function ZhiBoTiao(i) {
 	window.location.href = "ZhiBo.html?index=" + i;
 }
-
+/*
+ * 直播间分页
+ */
 function page(n, s, i) {
 	$("#pageNo").val(n);
 	$("#pageSize").val(s);
@@ -48,48 +50,65 @@ function page(n, s, i) {
 	$("#pageForm").submit();
 	return false;
 }
-//用户名验证
-function userNameMouseOver(){
-	userName = $("#userName").val()
 
-	var un = /^[\u4e00-\u9fa5_0-9a-zA-Z{4,10}]*$/g
-	if(!un.test(userName)){
-    	$("#userName_div").html("请输入4-10个字符的中英文或数字")
-    }else {
-    	$("#userName_div").html("")
-    }
-
-    //异步验证用户名是否已存在
-    data = {
-    	userName: userName,
-    }
-    $.ajax({
-    	type: 'POST',
-    	url: 'user/verifyUserName.html',
-    	data: data,
-    	success: function(result){
-    		if (result=='true') {
-    			$("#userName_div").html("该用户吗已存在！")
-    		}else {
-    			$("#userName_div").html("")
-    		}
-    	}
-    })
+/*
+ * 留言板分页
+ */
+function messageAllPage(n, s, i) {
+	$("#messageAllpageNo").val(n);
+	$("#messageAllpageSize").val(s);
+	$("#messageAllindex").val(i);
+	$("#messageAllpageForm").submit();
+	return false;
 }
 
-//密码验证
+//注册用户名验证
+function userNameMouseOver(){
+	userName = $("#userName").val()
+	flag = false
+	var un = /^[\u4e00-\u9fa5_0-9a-zA-Z{4,10}]*$/g
+	if(!un.test(userName)){
+		flag = false
+    	$("#userName_div").html("请输入4-10个字符的中英文或数字")
+    }else {
+		flag = true
+    	$("#userName_div").html("")
+    }
+	
+	if (flag){
+		//异步验证用户名是否已存在
+	    data = {
+	    	userName: userName,
+	    }
+	    $.ajax({
+	    	type: 'POST',
+	    	url: 'user/verifyUserName.html',
+	    	data: data,
+	    	success: function(result){
+	    		if (result=='true') {
+	    			$("#userName_div").html("该用户吗已存在！")
+	    		}else {
+	    			$("#userName_div").html("")
+	    		}
+	    	}
+	    })
+	}
+    
+}
+
+//注册密码验证
 function passWordMouseOver(){
 	passWord = $("#passWord").val()
-	var regex = new RegExp('(?=.*[a-zA-Z]).{4,20}')
+	var regex = new RegExp('(?=.*[a-zA-Z0-9]).{4,20}')
 	console.log(regex.test(passWord))
 	if (!regex.test(passWord)) {
-		$("#passWord_div").html("密码必须在4-20字符之间")
+		$("#passWord_div").html("密码必须是数字+字母,在4-20字符之间")
 	}else {
 		$("#passWord_div").html("")
 	}
 }
 
-//密码验证
+//注册密码验证
 function passWord2MouseOver(){
 	passWord = $("#passWord").val()
 	passWord2 = $("#passWord2").val()
@@ -101,7 +120,7 @@ function passWord2MouseOver(){
 	}
 }
 
-//邮箱验证
+//注册邮箱验证
 function emailMouseOver(){
 	email = $("#email").val()
 
@@ -131,4 +150,65 @@ function checkRegister(){
 	}
 	return flag
 }
+
+//登陆用户名非空验证
+function userNameLoginMouseOver(){
+	userName = $("#userNameLogin").val()
+	if(userName==""){
+		$("#login_div").html("")
+    	$("#userNameLogin_div").html("用户名不允许为空！")
+    }else {
+    	$("#userNameLogin_div").html("")
+    }
+}
+
+//登陆密码非空验证
+function passWordLoginMouseOver(){
+	passWordLogin = $("#passWordLogin").val()
+	if (passWordLogin == "") {
+		$("#passWordLogin_div").html("密码不允许为空")
+	}else {
+		$("#passWordLogin_div").html("")
+	}
+}
+
+
+//登陆
+function checkLogin(){
+	flag = false
+	userNameLogin_div = $("#userNameLogin_div").html()
+	passWordLogin_div = $("#passWordLogin_div").html()
+
+	userNameLogin = $("#userNameLogin").val()
+	passWordLogin = $("#passWordLogin").val()
+
+	if (userNameLogin_div == "" && passWordLogin_div == "" && userNameLogin != "" && passWordLogin != "") {
+		
+		data = {
+			userName: userNameLogin,
+			userPwd: passWordLogin,
+		}
+		
+		$.ajax({
+			async: false,
+			type: "POST",
+			url: "user/loginUser.html",
+			data: data,
+			success: function(result){
+				if (result == 'true') {
+					flag = true
+	    		}else {
+	    			$("#login_div").html("账号或者密码错误")
+	    		}
+			}
+			
+		})
+		
+	}
+
+	return flag
+}
+
+
+
 	
