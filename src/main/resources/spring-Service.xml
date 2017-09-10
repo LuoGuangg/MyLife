@@ -14,9 +14,18 @@
     <context:annotation-config />
     <mvc:annotation-driven />
 	<!-- Spring自动扫描注解 -->
-	<context:component-scan base-package="com.zhibolg.zhibo.*"/>
+	<context:component-scan base-package="com.zhibolg.*"/>
 	
 	<mvc:resources location="/resources/" mapping="/resources/**"/>
+	
+	<!-- 登陆拦截器 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/*.html"/>
+            <mvc:mapping path="/*/*.html" />  
+            <bean class="com.zhibolg.Interceptor.LoginInterceptor"/>  
+		</mvc:interceptor>
+	</mvc:interceptors>
 	
 	<!-- SpringMVC视图解析器 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

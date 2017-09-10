@@ -11,7 +11,9 @@ public class User extends EntityBase<User>{
 	private String userName;
 	private String userPwd;
 	private String email;
-	private int power;
+	private int power;	//权限 0：普通用户 1：管理员
+	
+	private String powerString; //权限内容
 	
 	public User() {
 		super();
@@ -22,6 +24,14 @@ public class User extends EntityBase<User>{
 	}
 	
 	
+	public String getPowerString() {
+		return powerString;
+	}
+
+	public void setPowerString(String powerString) {
+		this.powerString = powerString;
+	}
+
 	public String getUserName() {
 		return userName;
 	}
@@ -47,6 +57,13 @@ public class User extends EntityBase<User>{
 	}
 
 	public void setPower(int power) {
+		String powStr = "";
+		if(power == 0){
+			powStr = "普通用户";
+		}else if(power == 1){
+			powStr = "管理员";
+		}
+		this.powerString = powStr;
 		this.power = power;
 	}
 

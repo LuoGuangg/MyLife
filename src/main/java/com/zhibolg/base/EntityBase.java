@@ -1,6 +1,7 @@
 package com.zhibolg.base;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +38,8 @@ public abstract class EntityBase<T> extends ControllerBase{
 	private User updateBy;		// 更新者
 	private Date updateDate;	// 更新日期
 	private String delFlag; 	// 删除标记（0：正常；1：删除；）
+	
+	private String createDateString; //创建日期格式化
 
 	public EntityBase() {
 		
@@ -50,6 +53,12 @@ public abstract class EntityBase<T> extends ControllerBase{
 		return createBy;
 	}
 
+	public String getCreateDateString() {
+		return createDateString;
+	}
+	public void setCreateDateString(String createDateString) {
+		this.createDateString = createDateString;
+	}
 	public void setCreateBy(User createBy) {
 		this.createBy = createBy;
 	}
@@ -59,6 +68,8 @@ public abstract class EntityBase<T> extends ControllerBase{
 	}
 
 	public void setCreateDate(Date createDate) {
+		SimpleDateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		this.createDateString = dateFormater.format(createDate);
 		this.createDate = createDate;
 	}
 

@@ -10,7 +10,7 @@
 		a.email AS "email",
 		a.power AS "power",
 		a.create_by AS "create_by.id",
-		a.create_date AS "create_date",
+		a.create_date AS "createDate",
 		a.update_by AS "update_by.id",
 		a.update_date AS "update_date",
 		a.delFlag AS "delFlag"	
@@ -18,7 +18,7 @@
 	
 	<select id="findList" resultType="com.zhibolg.zhibo.entity.User">
 		SELECT 
-			<include refid="userColumns"/> 
+			<include refid="userColumns"/>
 		FROM user a
 	</select>
 	

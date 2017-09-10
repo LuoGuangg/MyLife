@@ -34,6 +34,7 @@ public class ControllerBase{
 	 */
 	protected void logoutSessionUser(HttpServletRequest request){
 		request.getSession().removeAttribute("User_session");
+		request.getSession().removeAttribute("userId");
 	}
 	
 	/*
