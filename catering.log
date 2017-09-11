@@ -1,0 +1,4 @@
+[CateringLog] 2017-09-11 20:01:08,952 WARN  net.sf.json.JSONObject - Property 'charAt' has no read method. SKIPPED
+[CateringLog] 2017-09-11 20:01:08,954 WARN  net.sf.json.JSONObject - Property 'length' has no read method. SKIPPED
+[CateringLog] 2017-09-11 20:01:53,491 WARN  net.sf.json.JSONObject - Property 'charAt' has no read method. SKIPPED
+[CateringLog] 2017-09-11 20:01:53,493 WARN  net.sf.json.JSONObject - Property 'length' has no read method. SKIPPED

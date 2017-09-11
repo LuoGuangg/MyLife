@@ -64,7 +64,7 @@
 	<bean id="sqlSessionFactoryBean"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="jdbcDataSoure"/>
-		<property name="mapperLocations" value="classpath:com/zhibolg/zhibo/*.xml"/>
+		<property name="mapperLocations" value="classpath:com/zhibolg/*/*.xml"/>
 		
         <!--此处是新增的分页拦截器-->
 		<property name="plugins">
@@ -75,7 +75,7 @@
 	</bean>
 	
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.zhibolg.zhibo.dao"/>
+		<property name="basePackage" value="com.zhibolg.*.dao"/>
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean"/>
 	</bean>
 	

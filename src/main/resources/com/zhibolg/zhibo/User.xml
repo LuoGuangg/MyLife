@@ -13,7 +13,7 @@
 		a.create_date AS "createDate",
 		a.update_by AS "update_by.id",
 		a.update_date AS "update_date",
-		a.delFlag AS "delFlag"	
+		a.del_Flag AS "delFlag"	
 	</sql>
 	
 	<select id="findList" resultType="com.zhibolg.zhibo.entity.User">

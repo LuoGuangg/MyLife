@@ -6,18 +6,23 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.zhibolg.Interceptor.LoginInterceptor;
 import com.zhibolg.zhibo.entity.Page;
 import com.zhibolg.zhibo.entity.User;
 import com.zhibolg.zhibo.service.UserService;
 import com.zhibolg.zhibo.util.UserUtil;
 
-@Transactional(readOnly = true)
+
 public abstract class ServiceBase<D extends DaoBase<T>,T extends EntityBase<T>>{
+	
+	private Log log = LogFactory.getLog(ServiceBase.class);
 	
 	@Autowired
 	protected D dao;
@@ -43,7 +48,7 @@ public abstract class ServiceBase<D extends DaoBase<T>,T extends EntityBase<T>>{
 	}
 	
 	public int insert(T entity){
-		
+		log.info(entity);
 		User user = UserUtil.getUser();
 		Date d = new Date(System.currentTimeMillis());
 		entity.setCreateDate(d);

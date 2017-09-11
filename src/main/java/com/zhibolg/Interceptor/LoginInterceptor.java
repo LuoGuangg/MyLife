@@ -5,12 +5,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.zhibolg.admin.entity.VistIp;
+import com.zhibolg.admin.service.VistIpService;
 import com.zhibolg.zhibo.controller.UserController;
 import com.zhibolg.zhibo.entity.User;
+import com.zhibolg.zhibo.util.IpUtil;
 import com.zhibolg.zhibo.util.UserUtil;
 
 /**
@@ -22,6 +26,9 @@ import com.zhibolg.zhibo.util.UserUtil;
 public class LoginInterceptor implements HandlerInterceptor{
 	
 	private Log log = LogFactory.getLog(LoginInterceptor.class);
+	
+	@Autowired
+	private VistIpService vistIpService;
 	
 	@Override
 	public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, 
@@ -44,6 +51,19 @@ public class LoginInterceptor implements HandlerInterceptor{
 		boolean flag = true;
         String reqUrl=request.getRequestURI().replace(request.getContextPath(), ""); 
         
+        //保存访问IP
+        String ip = IpUtil.getIpAddr(request);
+        VistIp vistIp = new VistIp(ip);
+
+        VistIp v = vistIpService.getByDay(vistIp);
+        
+        if(v == null){
+        	
+        	 vistIp = IpUtil.getAddressByIP(vistIp);
+             vistIpService.insert(vistIp);
+        }
+        
+       
         if(reqUrl.contains("admin")){
         	
         	User user =  UserUtil.getUser();

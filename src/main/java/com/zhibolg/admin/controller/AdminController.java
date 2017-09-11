@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.zhibolg.admin.entity.VistIp;
+import com.zhibolg.admin.service.VistIpService;
 import com.zhibolg.base.ControllerBase;
 import com.zhibolg.zhibo.controller.UserController;
 import com.zhibolg.zhibo.entity.User;
@@ -28,12 +30,34 @@ public class AdminController extends ControllerBase{
 	
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private VistIpService vistIpService;
 	
 	@RequestMapping(value = "")
 	public String admin(Model model){
-	 	List<User> userlist = userService.findList(new User());
 		model.addAttribute("user", UserUtil.getUser());
+		
+		/*
+		 * 获得所有用户信息
+		 */
+	 	List<User> userlist = userService.findList(new User());
 		model.addAttribute("userlist", userlist);
+		
 		return "admin/admin";
+	}
+	
+	
+	@RequestMapping(value = "ip")
+	public String ip(Model model){
+		model.addAttribute("user", UserUtil.getUser());
+		
+		/*
+		 * 获得所有IP
+		 */
+		VistIp vistIp = new VistIp();
+		List<VistIp> vistIpList = vistIpService.findList(vistIp);
+		model.addAttribute("vistIpList", vistIpList);
+		
+		return "admin/ip";
 	}
 }

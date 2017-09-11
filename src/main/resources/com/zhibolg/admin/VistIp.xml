@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.zhibolg.zhibo.dao.UserDao">
+<mapper namespace="com.zhibolg.admin.dao.VistIpDao">
 	
-	<sql id="userColumns">
+	<sql id="vistIpColumns">
 		a.id AS "id",
-		a.userName AS "userName",
-		a.userPwd AS "userPwd",
-		a.email AS "email",
-		a.power AS "power",
+		a.ip AS "ip",
+		a.country AS "country",
+		a.city AS "city",
 		a.create_by AS "create_by.id",
 		a.create_date AS "createDate",
 		a.update_by AS "update_by.id",
@@ -16,71 +15,71 @@
 		a.del_Flag AS "delFlag"	
 	</sql>
 	
-	<select id="findList" resultType="com.zhibolg.zhibo.entity.User">
+	<select id="findList" resultType="com.zhibolg.admin.entity.VistIp">
 		SELECT 
-			<include refid="userColumns"/>
-		FROM user a
+			<include refid="vistIpColumns"/>
+		FROM visit_ip a
+		WHERE del_flag = '0'
+		ORDER BY a.create_date DESC 
 	</select>
 	
-	<select id="get" resultType="com.zhibolg.zhibo.entity.User">
+	<select id="get" resultType="com.zhibolg.admin.entity.VistIp">
 		SELECT 
-			<include refid="userColumns"/> 
-		FROM user a
+			<include refid="vistIpColumns"/> 
+		FROM visit_ip a
 		<where>
 			<if test="id != '' and id != null">
 				a.id = #{id}
 			</if>
-			<if test="userName != '' and userName != null">
-				a.userName = #{userName}
+			<if test="ip != '' and ip != null">
+				a.ip = #{ip}
 			</if>
 		</where>
 	</select>
 	
-	
-	<select id="loginYZ" resultType="com.zhibolg.zhibo.entity.User">
+	<!-- 判断当天IP是否访问过 -->
+	<select id="getByDay" resultType="com.zhibolg.admin.entity.VistIp">
 		SELECT 
-			<include refid="userColumns"/> 
-		FROM user a
+			<include refid="vistIpColumns"/> 
+		FROM visit_ip a
 		<where>
-			a.userName = #{userName}
-			AND a.userPwd = #{userPwd}
+		to_days(create_date) = to_days(#{createDate})
+		AND ip = #{ip}
 		</where>
 	</select>
 	
 	<update id="update">
-		UPDATE user SET
-			userName = #{userName},
-			userPwd = #{userPwd},
-			email = #{email},
+		UPDATE visit_ip SET
+			ip = #{ip},
+			country = #{country},
+			city = #{city},
 			update_by = #{update_by.id},
 			update_date = #{update_date}
 		WHERE id = #{id}
 	</update>
 	
 	<update id="delete">
-		UPDATE user SET
+		UPDATE visit_ip SET
 			delFlag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
 	
 	<insert id="insert">
-		INSERT INTO user(
+		INSERT INTO visit_ip(
 			id,
-			userName,
-			userPwd,
-			email,
-			power,
+			ip,
+			country,
+			city,
 			create_by,
 			create_date,
 			update_by,
 			update_date,
-			delFlag
+			del_Flag
 		) VALUE (
 			#{id},
-			#{userName},
-			#{userPwd},
-			#{email},
-			#{power},
+			#{ip},
+			#{country},
+			#{city},
 			#{createBy.id},
 			#{createDate},
 			#{updateBy.id},

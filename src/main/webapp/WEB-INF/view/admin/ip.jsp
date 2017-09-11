@@ -57,8 +57,8 @@
 		<div class="layui-side-scroll">
 		
 			<ul class="layui-nav layui-nav-tree" lay-filter="test">
-				<li class="layui-nav-item leftSelect"><a href="${ctx}/admin.html">用户信息</a></li>
-				<li class="layui-nav-item"><a href="${ctx}/admin/ip.html">访问情况</a></li>
+				<li class="layui-nav-item"><a href="${ctx}/admin.html">用户信息</a></li>
+				<li class="layui-nav-item leftSelect"><a href="${ctx}/admin/ip.html">访问情况</a></li>
 			</ul>
 		</div>
 	</div>
@@ -79,18 +79,18 @@
 				  </colgroup>
 				  <thead>
 				    <tr>
-				      <th>用户名</th>
-				      <th>邮箱</th>
-				      <th>权限</th>
-				      <th>创建时间</th>
+				      <th>IP地址</th>
+				      <th>国家</th>
+				      <th>城市</th>
+				      <th>访问时间</th>
 				    </tr> 
 				  </thead>
 				  <tbody>
-				  <c:forEach items="${userlist}" var="list">
+				  <c:forEach items="${vistIpList}" var="list">
 				    <tr>
-				      <td>${list.userName}</td>
-				      <td>${list.email}</td>
-				      <td>${list.powerString}</td>
+				      <td>${list.ip}</td>
+				      <td>${list.country}</td>
+				      <td>${list.city}</td>
 				      <td>${list.createDateString}</td>
 				    </tr>
 				  </c:forEach>
