@@ -20,6 +20,11 @@
 		SELECT 
 			<include refid="userColumns"/>
 		FROM user a
+		<where>
+			<if test="pageMap.userName != null and pageMap.userName != ''">
+				a.userName like '%${pageMap.userName}%'
+			</if>
+		</where>
 	</select>
 	
 	<select id="get" resultType="com.zhibolg.zhibo.entity.User">

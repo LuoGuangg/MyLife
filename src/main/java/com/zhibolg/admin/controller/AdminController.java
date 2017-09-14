@@ -2,6 +2,9 @@ package com.zhibolg.admin.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.tomcat.util.log.UserDataHelper.Mode;
@@ -9,11 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.zhibolg.admin.entity.VistIp;
 import com.zhibolg.admin.service.VistIpService;
 import com.zhibolg.base.ControllerBase;
 import com.zhibolg.zhibo.controller.UserController;
+import com.zhibolg.zhibo.entity.Page;
 import com.zhibolg.zhibo.entity.User;
 import com.zhibolg.zhibo.service.UserService;
 import com.zhibolg.zhibo.util.UserUtil;
@@ -34,14 +39,28 @@ public class AdminController extends ControllerBase{
 	private VistIpService vistIpService;
 	
 	@RequestMapping(value = "")
-	public String admin(Model model){
+	public String admin(Model model, 
+			@RequestParam(required = false) String pageNo,
+			@RequestParam(required = false) String pageSize,
+			@RequestParam(required = false) String userName){
 		model.addAttribute("user", UserUtil.getUser());
 		
 		/*
 		 * 获得所有用户信息
 		 */
-	 	List<User> userlist = userService.findList(new User());
-		model.addAttribute("userlist", userlist);
+		User user = new User();
+		user.setUserName(userName);
+		user.getPageMap().put("userName", userName);
+		log.info(user);
+		model.addAttribute("userFrom", user);
+		
+
+		Page<User> upage = new Page<>(null, pageNo, pageSize);
+		upage.setPageSize(2);
+		upage.getPageMap().put("userName", userName);
+		
+	 	Page<User> page = userService.findPage(upage, user);
+		model.addAttribute("page", page);
 		
 		return "admin/admin";
 	}

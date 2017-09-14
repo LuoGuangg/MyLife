@@ -15,8 +15,6 @@
 	
 <link rel="stylesheet" href="${ctxResources}/css/zhibostyle.css">
 	
-<link rel="stylesheet" href="${ctxResources}/css/zhiboPage.css">
-	
 <link rel="stylesheet" href="${ctxResources}/css/layui.css">
 	
 <link rel="stylesheet" href="${ctxResources}/css/message.css">
@@ -215,8 +213,6 @@
 	</div>
 	
 	
-	<script src="${ctxResources}/js/jquery-1.8.3.min.js"></script>
-	<script src="${ctxResources}/js/jquery.min.js"></script>
 	<script src="${ctxResources}/js/layer.js"></script>
 	<script src="${ctxResources}/layui.js"></script>
 	

@@ -71,7 +71,7 @@ public class LoginInterceptor implements HandlerInterceptor{
         		flag = true;
         	}else {
             	flag = false;
-            	response.sendRedirect("error.html");
+            	response.sendRedirect("error/loginError.html");
         	}
         	
         }

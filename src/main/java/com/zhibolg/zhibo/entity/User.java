@@ -2,6 +2,9 @@ package com.zhibolg.zhibo.entity;
 
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.commons.codec.digest.DigestUtils;
 
 import com.zhibolg.base.EntityBase;
@@ -14,6 +17,8 @@ public class User extends EntityBase<User>{
 	private int power;	//权限 0：普通用户 1：管理员
 	
 	private String powerString; //权限内容
+
+	private Map<String, String> pageMap = new HashMap<String, String>();
 	
 	public User() {
 		super();
@@ -24,6 +29,14 @@ public class User extends EntityBase<User>{
 	}
 	
 	
+	public Map<String, String> getPageMap() {
+		return pageMap;
+	}
+
+	public void setPageMap(Map<String, String> pageMap) {
+		this.pageMap = pageMap;
+	}
+
 	public String getPowerString() {
 		return powerString;
 	}

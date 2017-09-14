@@ -12,9 +12,16 @@
 <meta name="author" content="lg">
 
 <link rel="stylesheet" href="${ctxResources}/css/layui.css">
-<link rel="stylesheet" href="${ctxResources}/css/admin/userList.css">
+<link rel="stylesheet" href="${ctxResources}/css/admin/admin.css">
 
 </head>
+
+<form:form id="pageForm" action="admin.html" method="post">
+	<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}" />
+	<input id="pageSize" name="pageSize" type="hidden"
+		value="${page.pageSize}" />
+</form:form>
+
 <div class="layui-layout layui-layout-admin">
 	<div class="layui-header">
 		<div class="layui-logo">节奏直播导航后台</div>
@@ -69,6 +76,15 @@
 				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
 				  <legend>用户列表</legend>
 				</fieldset>  
+				
+				<form:form id="searchForm" modelAttribute="user" action="admin.html" method="post">
+					<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}" />
+					<input id="pageSize" name="pageSize" type="hidden"
+						value="${page.pageSize}" />
+					<label>用户名</label>
+					<input  id="userName"  name="userName" value="${userFrom.userName}">
+					<button class="layui-btn layui-btn-small" type="submit" value="查询">查询</button>
+				</form:form>
 				 
 				<table class="layui-table">
 				  <colgroup>
@@ -86,7 +102,7 @@
 				    </tr> 
 				  </thead>
 				  <tbody>
-				  <c:forEach items="${userlist}" var="list">
+				  <c:forEach items="${page.results}" var="list">
 				    <tr>
 				      <td>${list.userName}</td>
 				      <td>${list.email}</td>
@@ -95,8 +111,8 @@
 				    </tr>
 				  </c:forEach>
 				  </tbody>
-				</table> 
-		
+				</table>
+				<div class="pagination pages">${page}</div> 
 		</div>
 	</div>
 
@@ -107,6 +123,7 @@
 </div>
 
 <script src="${ctxResources}/layui.js"></script>
+<script src="${ctxResources}/js/admin/admin.js"></script>
 	
 <script>
 	//用户下拉
