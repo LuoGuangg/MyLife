@@ -59,6 +59,7 @@
         <property name="testOnReturn">    
             <value>false</value>    
         </property>    
+        
 	</bean>
 	
 	<bean id="sqlSessionFactoryBean"
@@ -72,6 +73,7 @@
             <bean class="com.zhibolg.Interceptor.MyIntercepotr"/>
         </array>
       </property>
+      
 	</bean>
 	
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

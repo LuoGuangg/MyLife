@@ -15,8 +15,8 @@
 <link rel="stylesheet" href="${ctxResources}/css/admin/admin.css">
 
 </head>
-
-<form:form id="pageForm" action="admin.html" method="post">
+<body>
+<form:form id="pageForm" action="${ctx}/admin.html" method="post">
 	<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}" />
 	<input id="pageSize" name="pageSize" type="hidden"
 		value="${page.pageSize}" />
@@ -74,7 +74,7 @@
 		<!-- 内容主体区域 -->
 		<div style="padding: 15px;">
 				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
-				  <legend>用户列表</legend>
+				  <legend>访问列表</legend>
 				</fieldset>  
 				
 				<form:form id="searchForm" modelAttribute="user" action="admin.html" method="post">
@@ -82,16 +82,17 @@
 					<input id="pageSize" name="pageSize" type="hidden"
 						value="${page.pageSize}" />
 					<label>用户名</label>
-					<input  id="userName"  name="userName" value="${userFrom.userName}">
+					<input  id="userName"  name="userName" class="searchInput" value="${userFrom.userName}">
 					<button class="layui-btn layui-btn-small" type="submit" value="查询">查询</button>
 				</form:form>
 				 
 				<table class="layui-table">
 				  <colgroup>
-				    <col width="25%">
-				    <col width="25%">
-				    <col width="25%">
-				    <col width="25%">
+				    <col width="20%">
+				    <col width="20%">
+				    <col width="20%">
+				    <col width="20%">
+				    <col width="5%">
 				  </colgroup>
 				  <thead>
 				    <tr>
@@ -99,6 +100,7 @@
 				      <th>邮箱</th>
 				      <th>权限</th>
 				      <th>创建时间</th>
+				      <th>操作</th>
 				    </tr> 
 				  </thead>
 				  <tbody>
@@ -108,6 +110,7 @@
 				      <td>${list.email}</td>
 				      <td>${list.powerString}</td>
 				      <td>${list.createDateString}</td>
+				      <td><span class="pointer" onclick="blacklist('${list.id}')"><c:if test="${list.black == 0}">拉黑</c:if><c:if test="${list.black == 1}">解封</c:if></span></td>
 				    </tr>
 				  </c:forEach>
 				  </tbody>

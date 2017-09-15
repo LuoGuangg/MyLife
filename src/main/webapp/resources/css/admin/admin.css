@@ -9,4 +9,11 @@
     margin-top: -40;
 }
 
+.searchInput {
+	width: 80px;
+    height: 25px;
+}
 
+.pointer {
+	cursor: pointer;
+}

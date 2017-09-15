@@ -55,18 +55,18 @@
 	
 			<!-- 会员登录 -->
 			<div class="member">
-				<c:if test="${! not empty User_session}">
+				<c:if test="${user.id == null}">
 					<p>会员中心</p>
 				</c:if>
-				<c:if test="${not empty User_session}">
-					<p>${User_session.userName}</p>
+				<c:if test="${user.id != null}">
+					<p>${user.userName}</p>
 				</c:if>
 				<ul>
 					<li><img src="${ctxResources}/img/huiyuan1.png" alt="">
-					<c:if test="${! not empty User_session}">
+					<c:if test="${user.id == null}">
 						<a href="#" onclick="login();">登录</a>
 					</c:if>
-					<c:if test="${not empty User_session}">
+					<c:if test="${user.id != null}">
 						<a href="user/logoutUser.html">注销</a>
 					</c:if>
 					</li>
@@ -138,11 +138,16 @@
 			        	${page.results[0].index}
 			        </textarea>
 			    </div>
-			    <c:if test="${not empty User_session}">
+			    <c:if test="${user.id != null}">
+			    	<c:if test="${user.black == 0}">
 			    	<button class="layui-btn">留言</button>
+			    	</c:if>
+			    	<c:if test="${user.black == 1}">
+			    	<button class="black-btn" onclick="blackLiuYan()">留言</button>
+			    	</c:if>
 				</c:if>
 			    
-			    <c:if test="${!not empty User_session}">
+			    <c:if test="${user.id == null}">
 			    	<div class="rigt_huifu_noLogin">请先进行登陆在进行发言！</div>
 				</c:if>
 			  </form>
@@ -157,9 +162,14 @@
 						<div class="time_div">${messageAll.contentDateString}</div>
 						
 						<div class="gn_div">
-							<c:if test="${not empty User_session}">
-								<div class="liuyan_div_gn" onclick="showhuifu('${varSta.index}')">回复</div>
-								<c:if test="${User_session.power == 1}">
+							<c:if test="${user.id != null}">
+								<c:if test="${user.black == 0}">
+									<div class="liuyan_div_gn" onclick="showhuifu('${varSta.index}')">回复</div>
+						    	</c:if>
+						    	<c:if test="${user.black == 1}">
+						    		<div class="liuyan_div_gn" onclick="blackLiuYan()">回复</div>
+						    	</c:if>
+								<c:if test="${user.power == 1}">
 									<div class="liuyan_div_gn" onclick="deleteLiuYan('${messageAll.id}')">删除</div>
 								</c:if>
 							</c:if>
@@ -170,7 +180,7 @@
 						<c:forEach items="${messageHuiFuMap.get(messageAll.contentId)}" var="messageAllhuifu" >
 							<div class="huifu_div">
 								<div class="username_huifu_div"><span class="username_huifu_span">${messageAllhuifu.userName}</span>：  ${messageAllhuifu.content.replace('<p>', '').replace('</p>', '')}</div>
-								<div class="time_huifu_div">${messageAllhuifu.contentDateString}<c:if test="${not empty User_session}"><span class="time_huifu_span" onclick="pinglunDelete('${messageAllhuifu.id}')">删除</span></c:if></div>
+								<div class="time_huifu_div">${messageAllhuifu.contentDateString}<c:if test="${user.power == 1}"><span class="time_huifu_span" onclick="pinglunDelete('${messageAllhuifu.id}')">删除</span></c:if></div>
 							</div>
 						</c:forEach>
 						</div>

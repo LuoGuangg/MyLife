@@ -3,6 +3,7 @@ package com.zhibolg.zhibo.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,8 @@ public class UserController extends ControllerBase{
 	
 	@RequestMapping(value = "save")
 	public String save(User user,@RequestParam(required=false) String gameId){
+		
+		user.setUserPwd(DigestUtils.md5Hex(user.getUserPwd()));
 		userService.insert(user);
 		return "redirect:/ZhiBo.html?index="+gameId;  
 	}
@@ -73,6 +76,8 @@ public class UserController extends ControllerBase{
 	@RequestMapping(value = "loginUser")
 	@ResponseBody
 	public String loginUser(User user,HttpServletRequest request){
+
+		user.setUserPwd(DigestUtils.md5Hex(user.getUserPwd()));
 		User u = userService.loginYZ(user);
 		boolean flag = u == null ? false : true;
 		if (flag) {

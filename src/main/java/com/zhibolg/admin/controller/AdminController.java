@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zhibolg.admin.entity.VistIp;
 import com.zhibolg.admin.service.VistIpService;
@@ -43,6 +44,7 @@ public class AdminController extends ControllerBase{
 			@RequestParam(required = false) String pageNo,
 			@RequestParam(required = false) String pageSize,
 			@RequestParam(required = false) String userName){
+		
 		model.addAttribute("user", UserUtil.getUser());
 		
 		/*
@@ -51,12 +53,10 @@ public class AdminController extends ControllerBase{
 		User user = new User();
 		user.setUserName(userName);
 		user.getPageMap().put("userName", userName);
-		log.info(user);
 		model.addAttribute("userFrom", user);
 		
 
 		Page<User> upage = new Page<>(null, pageNo, pageSize);
-		upage.setPageSize(2);
 		upage.getPageMap().put("userName", userName);
 		
 	 	Page<User> page = userService.findPage(upage, user);
@@ -67,16 +67,51 @@ public class AdminController extends ControllerBase{
 	
 	
 	@RequestMapping(value = "ip")
-	public String ip(Model model){
+	public String ip(Model model, 
+			@RequestParam(required = false) String pageNo,
+			@RequestParam(required = false) String pageSize,
+			@RequestParam(required = false) String ip,
+			@RequestParam(required = false) String country,
+			@RequestParam(required = false) String city){
 		model.addAttribute("user", UserUtil.getUser());
 		
 		/*
 		 * 获得所有IP
 		 */
-		VistIp vistIp = new VistIp();
-		List<VistIp> vistIpList = vistIpService.findList(vistIp);
-		model.addAttribute("vistIpList", vistIpList);
+		
+		VistIp vistIp = new VistIp(ip, country, city);
+		vistIp.getPageMap().put("ip", ip);
+		vistIp.getPageMap().put("country", country);
+		vistIp.getPageMap().put("city", city);
+		model.addAttribute("vistIpFrom", vistIp);
+		
+
+		Page<VistIp> upage = new Page<>(null, pageNo, pageSize);
+		upage.getPageMap().put("ip", ip);
+		upage.getPageMap().put("country", country);
+		upage.getPageMap().put("city", city);
+		
+	 	Page<VistIp> page = vistIpService.findPage(upage, vistIp);
+		model.addAttribute("page", page);
 		
 		return "admin/ip";
 	}
+	
+	@RequestMapping(value = "black")
+	@ResponseBody
+	public String black(@RequestParam("id") String id){
+		
+		User u = new User();
+		u.setId(id);
+		
+		User user = userService.get(u);
+		
+		int black = user.getBlack() == 1 ? 0 : 1;
+		
+		user.setBlack(black);
+		userService.update(user);
+		
+		return "";
+	}
 }
+

@@ -48,7 +48,6 @@ public abstract class ServiceBase<D extends DaoBase<T>,T extends EntityBase<T>>{
 	}
 	
 	public int insert(T entity){
-		log.info(entity);
 		User user = UserUtil.getUser();
 		Date d = new Date(System.currentTimeMillis());
 		entity.setCreateDate(d);
@@ -62,6 +61,12 @@ public abstract class ServiceBase<D extends DaoBase<T>,T extends EntityBase<T>>{
 	}
 	
 	public int update(T entity){
+		User user = UserUtil.getUser();
+		entity.setUpdateBy(user);
+		
+		Date d = new Date(System.currentTimeMillis());
+		entity.setUpdateDate(d);
+		
 		return dao.update(entity);
 	}
 

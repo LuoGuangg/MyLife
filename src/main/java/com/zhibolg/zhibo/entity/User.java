@@ -6,14 +6,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
+import com.zhibolg.admin.controller.AdminController;
 import com.zhibolg.base.EntityBase;
 
 public class User extends EntityBase<User>{
+	private Log log = LogFactory.getLog(User.class);
 	
 	private String userName;
 	private String userPwd;
 	private String email;
+	private int black;	//拉黑，禁止发言（0，正常 1，拉黑）
 	private int power;	//权限 0：普通用户 1：管理员
 	
 	private String powerString; //权限内容
@@ -29,6 +34,14 @@ public class User extends EntityBase<User>{
 	}
 	
 	
+	public int getBlack() {
+		return black;
+	}
+
+	public void setBlack(int black) {
+		this.black = black;
+	}
+
 	public Map<String, String> getPageMap() {
 		return pageMap;
 	}
@@ -56,7 +69,7 @@ public class User extends EntityBase<User>{
 		return userPwd;
 	}
 	public void setUserPwd(String userPwd) {
-		this.userPwd = DigestUtils.md5Hex(userPwd); 
+		this.userPwd = userPwd; 
 	}
 	public String getEmail() {
 		return email;

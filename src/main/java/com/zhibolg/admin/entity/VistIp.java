@@ -1,5 +1,8 @@
 package com.zhibolg.admin.entity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.zhibolg.base.EntityBase;
 
 /**
@@ -12,13 +15,30 @@ public class VistIp extends EntityBase<VistIp>{
 	private String ip;	//ip地址
 	private String country;	//国家
 	private String city;	//城市
+
+	private Map<String, String> pageMap = new HashMap<String, String>();
 	
 	public VistIp() {
 		super();
 	}
 	
+	public VistIp(String ip, String country, String city) {
+		super();
+		this.ip = ip;
+		this.country = country;
+		this.city = city;
+	}
+
 	public String getCountry() {
 		return country;
+	}
+
+	public Map<String, String> getPageMap() {
+		return pageMap;
+	}
+
+	public void setPageMap(Map<String, String> pageMap) {
+		this.pageMap = pageMap;
 	}
 
 	public void setCountry(String country) {

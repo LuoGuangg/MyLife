@@ -1,5 +1,7 @@
 package com.zhibolg.zhibo.controller;
 
+import java.io.Serializable;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,12 @@ import com.zhibolg.zhibo.service.MessageContentService;
 */
 @Controller
 @RequestMapping(value = "message/all")
-public class MessageAllController  extends ControllerBase{
+public class MessageAllController  extends ControllerBase implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private Log log = LogFactory.getLog(MessageAllController.class);
 	

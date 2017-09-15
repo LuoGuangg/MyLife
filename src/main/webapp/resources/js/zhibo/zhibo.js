@@ -209,6 +209,9 @@ function checkLogin(){
 	return flag
 }
 
-
+function blackLiuYan(){
+	alert("该账号禁止发言")
+	return false
+}
 
 	

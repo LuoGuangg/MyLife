@@ -12,14 +12,25 @@
 		a.create_date AS "createDate",
 		a.update_by AS "update_by.id",
 		a.update_date AS "update_date",
-		a.del_Flag AS "delFlag"	
+		a.del_flag AS "delFlag"	
 	</sql>
 	
 	<select id="findList" resultType="com.zhibolg.admin.entity.VistIp">
 		SELECT 
 			<include refid="vistIpColumns"/>
 		FROM visit_ip a
-		WHERE del_flag = '0'
+		<where>
+		del_flag = '0'
+			<if test="pageMap.ip != null and pageMap.ip != ''">
+				AND a.ip like '%${pageMap.ip}%'
+			</if>
+			<if test="pageMap.country != null and pageMap.country != ''">
+				AND a.country like '%${pageMap.country}%'
+			</if>
+			<if test="pageMap.city != null and pageMap.city != ''">
+				AND a.city like '%${pageMap.city}%'
+			</if>
+		</where>
 		ORDER BY a.create_date DESC 
 	</select>
 	
@@ -53,14 +64,14 @@
 			ip = #{ip},
 			country = #{country},
 			city = #{city},
-			update_by = #{update_by.id},
-			update_date = #{update_date}
+			update_by = #{updateBy.id},
+			update_date = #{updateDate}
 		WHERE id = #{id}
 	</update>
 	
 	<update id="delete">
 		UPDATE visit_ip SET
-			delFlag = #{DEL_FLAG_DELETE}
+			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
 	
@@ -74,7 +85,7 @@
 			create_date,
 			update_by,
 			update_date,
-			del_Flag
+			del_flag
 		) VALUE (
 			#{id},
 			#{ip},

@@ -18,7 +18,7 @@ import com.zhibolg.zhibo.entity.User;
 * 类说明
 */
 @Service
-public class VistIpService extends  ServiceBase<DaoBase<VistIp>, VistIp>{
+public class VistIpService extends ServiceBase<DaoBase<VistIp>, VistIp>{
 	
 	@Autowired
 	private VistIpDao dao;

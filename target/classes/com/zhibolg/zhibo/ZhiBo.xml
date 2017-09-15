@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.zhibolg.zhibo.dao.ZhiBoDao">
-	
+
 	<sql id="zhiBoColumns">
 		a.id AS "id",
 		a.name AS "name",
@@ -13,7 +13,7 @@
 		a.index AS "index"
 	</sql>
 	
-	<select id="findList" resultType="com.zhibolg.zhibo.entity.ZhiBo">
+	<select id="findList" resultType="com.zhibolg.zhibo.entity.ZhiBo" useCache="true">
 		SELECT 
 			<include refid="zhiBoColumns"/> 
 		FROM game a

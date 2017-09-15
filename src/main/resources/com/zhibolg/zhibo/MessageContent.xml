@@ -37,8 +37,8 @@
 		UPDATE message_content SET
 			gameId = #{gameId},
 			content = #{content},
-			update_by = #{update_by.id},
-			update_date = #{update_date}
+			update_by = #{updateBy.id},
+			update_date = #{updateDate}
 		WHERE id = #{id}
 	</update>
 	

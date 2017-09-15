@@ -12,9 +12,18 @@
 <meta name="author" content="lg">
 
 <link rel="stylesheet" href="${ctxResources}/css/layui.css">
-<link rel="stylesheet" href="${ctxResources}/css/admin/userList.css">
+<link rel="stylesheet" href="${ctxResources}/css/admin/admin.css">
 
 </head>
+<body>
+
+<form:form id="pageForm" action="${ctx}/admin/ip.html" method="post">
+	<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}" />
+	<input id="pageSize" name="pageSize" type="hidden"
+		value="${page.pageSize}" />
+</form:form>
+
+
 <div class="layui-layout layui-layout-admin">
 	<div class="layui-header">
 		<div class="layui-logo">节奏直播导航后台</div>
@@ -67,8 +76,21 @@
 		<!-- 内容主体区域 -->
 		<div style="padding: 15px;">
 				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
-				  <legend>用户列表</legend>
+				  <legend>IP列表</legend>
 				</fieldset>  
+				 
+				<form:form id="searchForm" modelAttribute="vistIpFrom" action="${ctx}/admin/ip.html" method="post">
+					<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}" />
+					<input id="pageSize" name="pageSize" type="hidden"
+						value="${page.pageSize}" />
+					<label>IP</label>
+					<input  id="ip"  name="ip" class="searchInput" value="${vistIpFrom.ip}">
+					<label>国家</label>
+					<input  id="country"  name="country" class="searchInput" value="${vistIpFrom.country}">
+					<label>城市</label>
+					<input  id="city"  name="city" class="searchInput" value="${vistIpFrom.city}">
+					<button class="layui-btn layui-btn-small" type="submit" value="查询">查询</button>
+				</form:form>
 				 
 				<table class="layui-table">
 				  <colgroup>
@@ -86,7 +108,7 @@
 				    </tr> 
 				  </thead>
 				  <tbody>
-				  <c:forEach items="${vistIpList}" var="list">
+				  <c:forEach items="${page.results}" var="list">
 				    <tr>
 				      <td>${list.ip}</td>
 				      <td>${list.country}</td>
@@ -96,7 +118,7 @@
 				  </c:forEach>
 				  </tbody>
 				</table> 
-		
+				<div class="pagination pages">${page}</div> 
 		</div>
 	</div>
 
@@ -107,6 +129,7 @@
 </div>
 
 <script src="${ctxResources}/layui.js"></script>
+<script src="${ctxResources}/js/admin/admin.js"></script>
 	
 <script>
 	//用户下拉
@@ -115,5 +138,6 @@
 
 	});
 </script>
+
 </body>
 </html>

@@ -1,17 +1,24 @@
 package com.zhibolg.zhibo.entity;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.zhibolg.base.EntityBase;
 
-public class ZhiBo extends EntityBase<ZhiBo>{
+public class ZhiBo extends EntityBase<ZhiBo> implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private String name;
 	private String title;
 	private String url;
 	private String img;
 	private int num;
 	private int index;
+	
 	private Map<String, String> pageMap = new HashMap<String, String>();
 	
 	public ZhiBo() {

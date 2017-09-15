@@ -1,5 +1,6 @@
 package com.zhibolg.zhibo.entity;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,7 +13,12 @@ import com.zhibolg.base.EntityBase;
 * @version 创建时间：2017年9月8日 下午8:19:18
 * 类说明
 */
-public class MessageAll  extends EntityBase<MessageAll>{
+public class MessageAll  extends EntityBase<MessageAll> implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	private String contentId;//留言ID
 	private String targetId;//目标ID

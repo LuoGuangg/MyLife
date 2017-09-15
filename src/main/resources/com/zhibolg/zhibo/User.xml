@@ -9,11 +9,12 @@
 		a.userPwd AS "userPwd",
 		a.email AS "email",
 		a.power AS "power",
+		a.black AS "black",
 		a.create_by AS "create_by.id",
 		a.create_date AS "createDate",
 		a.update_by AS "update_by.id",
 		a.update_date AS "update_date",
-		a.del_Flag AS "delFlag"	
+		a.del_flag AS "delFlag"	
 	</sql>
 	
 	<select id="findList" resultType="com.zhibolg.zhibo.entity.User">
@@ -57,14 +58,15 @@
 			userName = #{userName},
 			userPwd = #{userPwd},
 			email = #{email},
-			update_by = #{update_by.id},
-			update_date = #{update_date}
+			black = #{black},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate}
 		WHERE id = #{id}
 	</update>
 	
 	<update id="delete">
 		UPDATE user SET
-			delFlag = #{DEL_FLAG_DELETE}
+			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
 	
@@ -75,17 +77,19 @@
 			userPwd,
 			email,
 			power,
+			black,
 			create_by,
 			create_date,
 			update_by,
 			update_date,
-			delFlag
+			del_flag
 		) VALUE (
 			#{id},
 			#{userName},
 			#{userPwd},
 			#{email},
 			#{power},
+			#{black},
 			#{createBy.id},
 			#{createDate},
 			#{updateBy.id},
