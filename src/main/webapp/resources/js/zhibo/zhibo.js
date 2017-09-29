@@ -108,6 +108,19 @@ function passWordMouseOver(){
 	}
 }
 
+//修改密码 密码验证
+function changepassWordMouseOver(){
+	changepassWord = $("#changepassWord").val()
+	var regex = new RegExp('(?=.*[a-zA-Z0-9]).{4,20}')
+	console.log(regex.test(changepassWord))
+	if (!regex.test(changepassWord)) {
+		$("#changepassWord_div").html("密码必须是数字+字母,在4-20字符之间")
+	}else {
+		$("#changepassWord_div").html("")
+	}
+}
+
+
 //注册密码验证
 function passWord2MouseOver(){
 	passWord = $("#passWord").val()
@@ -115,10 +128,26 @@ function passWord2MouseOver(){
 	
 	if (passWord != passWord2) {
 		$("#passWord2_div").html("两次输入的密码不一致")
+		$("#changepassWord2_div").html("两次输入的密码不一致")
 	}else {
 		$("#passWord2_div").html("")
+		$("#changepassWord2_div").html("")
 	}
 }
+
+
+//修改密码 密码验证
+function changepassWord2MouseOver(){
+	changepassWord = $("#changepassWord").val()
+	changepassWord2 = $("#changepassWord2").val()
+	
+	if (changepassWord != changepassWord2) {
+		$("#changepassWord2_div").html("两次输入的密码不一致")
+	}else {
+		$("#changepassWord2_div").html("")
+	}
+}
+
 
 //注册邮箱验证
 function emailMouseOver(){
@@ -146,6 +175,21 @@ function checkRegister(){
 	email = $("#email").val()
 
 	if (userName_div == "" && passWord_div == "" && passWord2_div == "" && email_div == "" && userName != "" && passWord != "" && email != "") {
+		flag = true
+	}
+	return flag
+}
+
+
+//修改密码
+function checkPassword(){
+	flag = false
+	changepassWord_div = $("#changepassWord_div").html()
+	changepassWord2_div = $("#changepassWord2_div").html()
+	
+	changepassWord = $("#changepassWord").val()
+	
+	if (changepassWord_div == "" && changepassWord2_div == "" && changepassWord != "") {
 		flag = true
 	}
 	return flag

@@ -58,8 +58,8 @@ public class IpUtil {
 			reader.close();
 			
 			JSONObject jsonObject = JSONObject.fromObject(result.toString());
-			
-			int code = (int) jsonObject.get("code");	
+
+			int code = (Integer) jsonObject.get("code");	
 			
 			if(code == 0){
 				JSONObject json = (JSONObject) jsonObject.get("data");

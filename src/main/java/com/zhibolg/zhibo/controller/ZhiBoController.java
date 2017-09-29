@@ -130,4 +130,5 @@ public class ZhiBoController extends ControllerBase{
 		
 		return messageAllService.findPage(mpage, messageAll);
 	}
+	
 }

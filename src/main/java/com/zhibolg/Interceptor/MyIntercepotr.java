@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.executor.parameter.ParameterHandler;
 import org.apache.ibatis.executor.statement.RoutingStatementHandler;
@@ -23,6 +25,7 @@ import org.apache.ibatis.scripting.defaults.DefaultParameterHandler;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 
+import com.zhibolg.admin.controller.AdminController;
 import com.zhibolg.zhibo.entity.Page;
 
 /** 
@@ -41,6 +44,8 @@ import com.zhibolg.zhibo.entity.Page;
 @Intercepts({@Signature(type = StatementHandler.class,method = "prepare", args = {Connection.class, Integer.class})}) 
 public class MyIntercepotr implements Interceptor, org.apache.ibatis.plugin.Interceptor{
 
+	private Log log = LogFactory.getLog(MyIntercepotr.class);
+	
 	public Object intercept(Invocation invocation) throws Throwable {
 		RoutingStatementHandler handler = (RoutingStatementHandler)invocation.getTarget();
 		

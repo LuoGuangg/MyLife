@@ -27,4 +27,14 @@ public class ErrorController extends ControllerBase{
     	
 		return "error/error";
 	}
+	
+
+	@RequestMapping(value = "passwordError")
+	public String passwordError(Model model){
+		
+    	String loginerror = "您的旧密码输入错误！修改密码失败";
+    	model.addAttribute("loginerror", loginerror);
+    	
+		return "error/error";
+	}
 }

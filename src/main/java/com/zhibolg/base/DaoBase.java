@@ -49,4 +49,5 @@ public interface DaoBase<T> {
 	 */
 	public int delete(T entity);
 
+
 }

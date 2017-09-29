@@ -19,7 +19,7 @@ import com.zhibolg.zhibo.entity.User;
 
 @Transactional(readOnly = true)
 public abstract class EntityBase<T> extends ControllerBase{
-	private Log logger = LogFactory.getLog(EntityBase.class);
+	private Log log = LogFactory.getLog(EntityBase.class);
 	
 	public static final String DEL_FLAG_NORMAL = "0";//0：正常
 	public static final String DEL_FLAG_DELETE = "1";//1：删除

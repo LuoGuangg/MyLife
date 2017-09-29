@@ -29,24 +29,20 @@ public class LoginInterceptor implements HandlerInterceptor{
 	
 	@Autowired
 	private VistIpService vistIpService;
-	
-	@Override
-	public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, 
-			Object arg2, Exception arg3)
+
+	public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception arg3)
 			throws Exception {
-		log.info("afterCompletion");
+		// TODO Auto-generated method stub
+		
 	}
 
-	@Override
-	public void postHandle(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2,
-			ModelAndView arg3)
+	public void postHandle(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, ModelAndView arg3)
 			throws Exception {
-		log.info("postHandle");
+		// TODO Auto-generated method stub
+		
 	}
 
-	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
-			Object arg2) throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {
 		 //获取url地址  
 		boolean flag = true;
         String reqUrl=request.getRequestURI().replace(request.getContextPath(), ""); 
@@ -77,5 +73,6 @@ public class LoginInterceptor implements HandlerInterceptor{
         }
 		return flag;
 	}
+	
 
 }

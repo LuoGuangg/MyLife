@@ -35,10 +35,10 @@
 				<li class="logo">
 					<!---<img src="" alt="" />--->
 				</li>
-				<li><a href="ZhiBo.html">直播导航</a></li>
-				<!-- 
-				<li><a href="#">词云制作</a></li>
-				 -->
+				<li><a href="${ctx}/ZhiBo.html">直播导航</a></li>
+				
+				<li><a href="${ctx}/person/personRelation.html">角色关系</a></li>
+				 
 				<li class="search"><a class="search_pic"></a></li>
 				<li class="list"><a></a></li>
 			</ul>
@@ -63,13 +63,21 @@
 				</c:if>
 				<ul>
 					<li><img src="${ctxResources}/img/huiyuan1.png" alt="">
+					
 					<c:if test="${user.id == null}">
 						<a href="#" onclick="login();">登录</a>
 					</c:if>
 					<c:if test="${user.id != null}">
-						<a href="user/logoutUser.html">注销</a>
+						<a href="${ctx}/user/logoutUser.html">注销</a>
 					</c:if>
 					</li>
+					
+					<c:if test="${user.id != null}">
+					<li><img src="${ctxResources}/img/huiyuan1.png" alt="">
+						<a href="#" onclick="changePassword();">修改密码</a>
+					</li>
+					</c:if>
+					
 					<li><img src="${ctxResources}/img/huiyuan1.png" alt="">
 						<a href="#" onclick="register();">新会员注册</a></li>
 				</ul>
@@ -276,7 +284,7 @@
 			  ,maxmin: true //允许全屏最小化
 			  ,anim: 1 //0-6的动画形式，-1不开启
 			  ,content: '<div class="register">'+
-			  				'<form:form modelAttribute="user" method="post" action="user/save.html" onsubmit="return checkRegister();">'+
+			  				'<form:form modelAttribute="user" method="post" action="${ctx}/user/save.html" onsubmit="return checkRegister();">'+
 			  					'<form:input path="userName" id="userName" placeholder="账号：" onblur="userNameMouseOver();" /><div id="userName_div"></div><br />'+
 			  					'<form:password path="userPwd" id="passWord" placeholder="密码：" onblur="passWordMouseOver();" /><div id="passWord_div"></div><br />'+
 			  					'<input type="password" id="passWord2" placeholder="确认密码：" onblur="passWord2MouseOver();" /><div id="passWord2_div"></div><br />'+
@@ -298,7 +306,7 @@
 			  ,maxmin: true //允许全屏最小化
 			  ,anim: 1 //0-6的动画形式，-1不开启
 			  ,content: '<div class="register">'+
-			  				'<form:form modelAttribute="user" method="post" action="ZhiBo.html" onsubmit="return checkLogin();">'+
+			  				'<form:form modelAttribute="user" method="post" action="${ctx}/ZhiBo.html" onsubmit="return checkLogin();">'+
 			  					'<form:input path="userName" id="userNameLogin" placeholder="账号：" onblur="userNameLoginMouseOver();" /><div id="userNameLogin_div"></div><br />'+
 			  					'<form:password path="userPwd" id="passWordLogin" placeholder="密码：" onblur="passWordLoginMouseOver();" /><div id="passWordLogin_div"></div><br />'+
 			  					'<input type="hidden" id="gameId" name="gameId"  value="${page.results[0].index}" />'+
@@ -306,6 +314,26 @@
 			  				'</form:form>'+
 			  			'</div>'
 			}); 
+		}
+		
+		function changePassword(){
+			layer.open({
+				  type: 1 //Page层类型
+				  ,area: ['600px', '400px']
+				  ,title: '修改密码'
+				  ,shade: 0.6 //遮罩透明度
+				  ,maxmin: true //允许全屏最小化
+				  ,anim: 1 //0-6的动画形式，-1不开启
+				  ,content: '<div class="register">'+
+				  				'<form:form modelAttribute="user" method="post" action="${ctx}/user/update.html?id=${user.id}" onsubmit="return checkPassword();">'+
+				  					'<form:input path="userName" id="uchangeserName" placeholder="账号：" readonly="true" /><br />'+
+				  					'<input type="password" id="passWordold" name="passWordold"  placeholder="旧密码：" /><br />'+
+				  					'<input type="password" id="changepassWord" name="changepassWord"  placeholder="新密码：" onblur="changepassWordMouseOver();" /><div id="changepassWord_div"></div><br />'+
+				  					'<input type="password" id="changepassWord2" placeholder="确认密码：" onblur="changepassWord2MouseOver();" /><div id="changepassWord2_div"></div><br />'+
+				  					'<input type="submit" id="changepassWord" value="确定修改" /><br />'+
+				  				'</form:form>'+
+				  			'</div>'
+				});    
 		}
 	
 	</script>

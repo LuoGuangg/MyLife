@@ -1,5 +1,7 @@
 package com.zhibolg.zhibo.controller;
 
+import static org.junit.Assert.fail;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -27,17 +29,19 @@ import com.zhibolg.zhibo.service.UserService;
 @Controller
 @RequestMapping(value = "user")
 public class UserController extends ControllerBase{
-	private  Log logger = LogFactory.getLog(UserController.class);
+	private  Log log = LogFactory.getLog(UserController.class);
 	
 	@Autowired
 	private UserService userService;
 	
 	@ModelAttribute
 	public User get(@RequestParam(required = false) String id){
+		User user = new User();
+		user.setId(id);
 		if(id == null){
-			return new User();
+			return user;
 		}
-		return userService.get(id);
+		return userService.get(user);
 	}
 	
 	@RequestMapping(value = "save")
@@ -47,10 +51,25 @@ public class UserController extends ControllerBase{
 		userService.insert(user);
 		return "redirect:/ZhiBo.html?index="+gameId;  
 	}
-
+	
+	/**
+	 * 修改密码
+	 * @param user
+	 * @param passWordold 旧密码
+	 * @param changepassWord 新密码
+	 * @return
+	 */
 	@RequestMapping(value = "update")
-	public void update(User user){
-		userService.update(user);
+	public String update(User user,@RequestParam(required = false) String passWordold,
+			@RequestParam(required = false) String changepassWord){
+		
+		String pwMD5 = DigestUtils.md5Hex(passWordold);
+		if(user.getUserPwd().equals(pwMD5)) {
+			user.setUserPwd(DigestUtils.md5Hex(changepassWord));
+			userService.update(user);
+			return "redirect:/ZhiBo.html";  
+		}
+		return "redirect:/error/passwordError.html";
 	}
 
 	@RequestMapping(value = "delete")
@@ -81,7 +100,7 @@ public class UserController extends ControllerBase{
 		User u = userService.loginYZ(user);
 		boolean flag = u == null ? false : true;
 		if (flag) {
-			logger.info("用户登陆："+u);
+			log.info("用户登陆："+u);
 			setSessionUser(request, u);
 		}
 		return flag ? "true" : "false";

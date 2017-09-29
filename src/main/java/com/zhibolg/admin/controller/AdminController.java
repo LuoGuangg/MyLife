@@ -56,7 +56,7 @@ public class AdminController extends ControllerBase{
 		model.addAttribute("userFrom", user);
 		
 
-		Page<User> upage = new Page<>(null, pageNo, pageSize);
+		Page<User> upage = new Page<User>(null, pageNo, pageSize);
 		upage.getPageMap().put("userName", userName);
 		
 	 	Page<User> page = userService.findPage(upage, user);
@@ -86,7 +86,7 @@ public class AdminController extends ControllerBase{
 		model.addAttribute("vistIpFrom", vistIp);
 		
 
-		Page<VistIp> upage = new Page<>(null, pageNo, pageSize);
+		Page<VistIp> upage = new Page<VistIp>(null, pageNo, pageSize);
 		upage.getPageMap().put("ip", ip);
 		upage.getPageMap().put("country", country);
 		upage.getPageMap().put("city", city);
