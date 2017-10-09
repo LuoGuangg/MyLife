@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.zhibolg.admin.entity.Ma;
 import com.zhibolg.admin.entity.VistIp;
+import com.zhibolg.admin.service.MaService;
 import com.zhibolg.admin.service.VistIpService;
 import com.zhibolg.base.ControllerBase;
 import com.zhibolg.zhibo.controller.UserController;
@@ -38,6 +40,9 @@ public class AdminController extends ControllerBase{
 	private UserService userService;
 	@Autowired
 	private VistIpService vistIpService;
+	
+	@Autowired
+	private MaService maService;
 	
 	@RequestMapping(value = "")
 	public String admin(Model model, 
@@ -113,5 +118,52 @@ public class AdminController extends ControllerBase{
 		
 		return "";
 	}
+	
+	/*
+	 * 关于赌马
+	 */
+	
+
+	@RequestMapping(value = "addDuMa")
+	public String addDuMa(Model model,@RequestParam(required = false) String maName1,
+			@RequestParam(required = false) String maColor1,
+			@RequestParam(required = false) String maName2,
+			@RequestParam(required = false) String maColor2,
+			@RequestParam(required = false) String maWin,
+			@RequestParam(required = false) String maNameSearch,
+			@RequestParam(required = false) String maColorSearch,
+			@RequestParam(required = false) String maNameSearch2,
+			@RequestParam(required = false) String maColorSearch2){
+		
+		model.addAttribute("user", UserUtil.getUser());
+		if(maName1 != null) {
+			Ma ma1 = new Ma();
+			ma1.setMaType(maName1+"-->"+maColor1);
+			ma1.setMaType2(maName2+"-->"+maColor2);
+			
+			if("前者".equals(maWin)) {
+				ma1.setMaWin(ma1.getMaType());
+			}else {
+				ma1.setMaWin(ma1.getMaType2());
+			}
+			
+			maService.insert(ma1);
+			
+		}
+		Ma ma = new Ma();
+		if(maNameSearch != null && maNameSearch != "") {
+			ma.setMaType(maNameSearch+"%"+maColorSearch);
+		}
+		
+		if(maNameSearch2 != null && maNameSearch2 != "") {
+			ma.setMaType2(maNameSearch2+"%"+maColorSearch2);
+		}
+		
+		List<Ma> maList = maService.findList(ma);
+		model.addAttribute("maList", maList);
+		
+		return "admin/duma/addDuMa";
+	}
+	
 }
 

@@ -68,6 +68,7 @@
 			<ul class="layui-nav layui-nav-tree" lay-filter="test">
 				<li class="layui-nav-item"><a href="${ctx}/admin.html">用户信息</a></li>
 				<li class="layui-nav-item leftSelect"><a href="${ctx}/admin/ip.html">访问情况</a></li>
+				<li class="layui-nav-item"><a href="${ctx}/admin/addDuMa.html">赌马统计</a></li>
 			</ul>
 		</div>
 	</div>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhibolg.admin.dao.MaDao">
+
+	
+	<sql id="maColumns">
+		a.id AS "id",
+		a.maType AS "maType",
+		a.maType2 AS "maType2",
+		a.maWin AS "maWin",
+		a.create_by AS "create_by.id",
+		a.create_date AS "createDate",
+		a.update_by AS "update_by.id",
+		a.update_date AS "update_date",
+		a.del_flag AS "delFlag"	
+	</sql>
+	
+	
+	
+	<select id="findList"  resultType="com.zhibolg.admin.entity.Ma">
+		SELECT 
+			<include refid="maColumns"/>
+		FROM maCount a
+		
+		<where>
+		1 = 1
+		<if test="maType == null or maType == '' or maType2 == null or maType2 == '' ">
+			<if test="maType != null and maType != ''">
+				AND a.maType LIKE '%${maType}%' OR a.maType2 LIKE '%${maType}%'
+			</if>
+			
+			<if test="maType2 != null and maType2 != ''">
+				AND a.maType2 LIKE '%${maType2}%' OR  a.maType LIKE '%${maType2}%' 
+			</if>
+		</if>
+		
+		<if test="maType != null and maType != '' and maType2 != null and maType2 != ''">
+				AND a.maType LIKE '%${maType}%' 
+				AND a.maType2 LIKE '%${maType2}%'
+				OR a.maType2 LIKE '%${maType}%' 
+				AND  a.maType LIKE '%${maType2}%'
+		</if>
+		
+		</where>
+		ORDER BY a.create_date DESC
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO maCount(
+			id,
+			maType,
+			maType2,
+			maWin,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag
+		) VALUE (
+			#{id},
+			#{maType},
+			#{maType2},
+			#{maWin},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{delFlag}
+		)
+	</insert>
+	
+</mapper>
