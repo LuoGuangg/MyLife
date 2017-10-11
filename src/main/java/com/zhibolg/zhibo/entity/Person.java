@@ -10,7 +10,7 @@ public class Person extends EntityBase<Person>{
 	private int rank;//用于关联关系
 	private String name;//姓名
 	private String category;//颜色
-	private int age;//年龄
+	private String birth;//年龄
 	private String sex;//性别
 	private String phone;//电话
 	private String qq;//QQ
@@ -34,14 +34,14 @@ public class Person extends EntityBase<Person>{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getAge() {
-		return age;
-	}
-	public void setAge(int age) {
-		this.age = age;
-	}
 	public String getSex() {
 		return sex;
+	}
+	public String getBirth() {
+		return birth;
+	}
+	public void setBirth(String birth) {
+		this.birth = birth;
 	}
 	public void setSex(String sex) {
 		this.sex = sex;
@@ -81,6 +81,12 @@ public class Person extends EntityBase<Person>{
 	}
 	public void setCategory(String category) {
 		this.category = category;
+	}
+	@Override
+	public String toString() {
+		return "Person [rank=" + rank + ", name=" + name + ", category=" + category + ", birth=" + birth + ", sex="
+				+ sex + ", phone=" + phone + ", qq=" + qq + ", source=" + source + ", target=" + target + ", relation="
+				+ relation + "]";
 	}
 	
 	

@@ -20,4 +20,24 @@ public interface PersonDao extends DaoBase<Person>{
 	 */
 	List<Person> findListPersonRelation(Person person);
 
+	/*
+	 * 按照姓名查找人物
+	 */
+	Person getByName(String name);
+
+	/*
+	 * 插入人物信息
+	 */
+	void insertPerson(Person person);
+
+	/*
+	 * 获得此人物的关系列表
+	 */
+	List<Person> findRelation(Person person);
+
+	/*
+	 * 排除以及有关系的人物，获得其他人物
+	 */
+	List<Person> findListPersonByRank(List<Integer> keyList);
+
 }

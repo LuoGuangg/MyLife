@@ -8,7 +8,7 @@
 		a.rank AS "rank",
 		a.name AS "name",
 		a.category AS "category",
-		a.age AS "age",
+		a.birth AS "birth",
 		a.sex AS "sex",
 		a.phone AS "phone",
 		a.qq AS "qq",
@@ -45,7 +45,42 @@
 		ORDER BY a.rank 
 	</select>
 	
+	<!-- 查询人物列表 -->
+	<select id="findListPersonByRank" resultType="com.zhibolg.zhibo.entity.Person">
+		SELECT 
+			<include refid="personColumns"/>
+		FROM person a
+		<where>
+		del_flag = '0'
 		
+		</where>
+		ORDER BY a.rank 
+	</select>
+	
+	<!-- 查询人物 -->
+	<select id="get" resultType="com.zhibolg.zhibo.entity.Person">
+		SELECT 
+			<include refid="personColumns"/>
+		FROM person a
+		<where>
+		del_flag = '0'
+		AND a.id = #{id}
+		</where>
+	</select>
+	
+		
+	<!-- 查询人物通过姓名 -->
+	<select id="getByName" resultType="com.zhibolg.zhibo.entity.Person">
+		SELECT 
+			<include refid="personColumns"/>
+		FROM person a
+		<where>
+		del_flag = '0'
+		AND a.name = #{name}
+		</where>
+	</select>
+	
+	
 	<!-- 查询人物关系列表 -->
 	<select id="findListPersonRelation" resultType="com.zhibolg.zhibo.entity.Person">
 		SELECT 
@@ -59,6 +94,20 @@
 	</select>
 
 
+	
+	<!-- 获得此人物的关系列表-->
+	<select id="findRelation" resultType="com.zhibolg.zhibo.entity.Person">
+		SELECT 
+			<include refid="personRelationColumns"/>
+		FROM person_relation a
+		<where>
+		a.create_by = #{createBy.id} AND
+		target = #{rank} OR
+		source = #{rank}
+		</where>
+	</select>
+	
+	
 	<!-- 插入人物 -->
 	<insert id="insertPerson">
 		INSERT INTO person(
@@ -66,7 +115,7 @@
 			rank,
 			category,
 			name,
-			age,
+			birth,
 			sex,
 			phone,
 			qq,
@@ -80,7 +129,7 @@
 			#{rank},
 			#{category},
 			#{name},
-			#{age},
+			#{birth},
 			#{sex},
 			#{phone},
 			#{qq},

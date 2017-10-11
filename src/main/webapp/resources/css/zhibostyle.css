@@ -111,7 +111,7 @@
 	padding-left: 20%;
 }
 
-.register input {
+.register input:not(.personSex){
 	position: relative;
 	border-left-width:0px;
 	border-top-width:0px;
@@ -122,7 +122,12 @@
 	width: 50%;
 }
 
-.register #userName_div{
+.register .personSex {
+	margin-left: 10px;
+	margin-top: 20px;
+}
+
+.register #userName_div, #name_div{
 	position: absolute;
     top: 20px;
     left: 380px;
@@ -136,7 +141,6 @@
     font-size: 12px;
     color: red;
 }
-
 .register  #changepassWord_div{
 	position: absolute;
     top: 110px;
