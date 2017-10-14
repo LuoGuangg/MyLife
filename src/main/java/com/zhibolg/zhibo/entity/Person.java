@@ -18,8 +18,8 @@ public class Person extends EntityBase<Person>{
 	/*
 	 * 人物关系
 	 */
-	private int source;//来源
-	private int target;//目标
+	private String source;//来源
+	private String target;//目标
 	private String relation;//关系
 	
 	public int getRank() {
@@ -58,18 +58,7 @@ public class Person extends EntityBase<Person>{
 	public void setQq(String qq) {
 		this.qq = qq;
 	}
-	public int getSource() {
-		return source;
-	}
-	public void setSource(int source) {
-		this.source = source;
-	}
-	public int getTarget() {
-		return target;
-	}
-	public void setTarget(int target) {
-		this.target = target;
-	}
+	
 	public String getRelation() {
 		return relation;
 	}
@@ -81,6 +70,18 @@ public class Person extends EntityBase<Person>{
 	}
 	public void setCategory(String category) {
 		this.category = category;
+	}
+	public String getSource() {
+		return source;
+	}
+	public void setSource(String source) {
+		this.source = source;
+	}
+	public String getTarget() {
+		return target;
+	}
+	public void setTarget(String target) {
+		this.target = target;
 	}
 	@Override
 	public String toString() {

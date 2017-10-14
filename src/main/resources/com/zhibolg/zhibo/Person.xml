@@ -45,18 +45,6 @@
 		ORDER BY a.rank 
 	</select>
 	
-	<!-- 查询人物列表 -->
-	<select id="findListPersonByRank" resultType="com.zhibolg.zhibo.entity.Person">
-		SELECT 
-			<include refid="personColumns"/>
-		FROM person a
-		<where>
-		del_flag = '0'
-		
-		</where>
-		ORDER BY a.rank 
-	</select>
-	
 	<!-- 查询人物 -->
 	<select id="get" resultType="com.zhibolg.zhibo.entity.Person">
 		SELECT 
@@ -92,8 +80,67 @@
 		a.create_by = #{createBy.id}
 		</where>
 	</select>
-
-
+	
+		
+	
+	<!-- 查询人物关系具体信息列表 -->
+	<select id="findListPersonRelationXinXi" resultType="com.zhibolg.zhibo.entity.Person">
+		SELECT p.id, p.relation, p.create_by AS "create_by.id", p.create_date AS "createDate",
+		(select person.`name` from person where person.rank=p.source) AS "source", 
+		(select person.`name` from person where person.rank=p.target) AS "target" 
+		from person_relation p WHERE p.source = #{rank} OR p.target = #{rank}
+		AND p.create_by = #{createBy.id}
+	</select>
+	
+	<!-- 删除人物关系 -->
+	<delete id="relationDelete">
+		DELETE from person_relation
+		WHERE person_relation.id = #{rid} AND person_relation.create_by = #{createBy.id}
+	</delete>
+	
+	
+	<!-- 删除人物 -->
+	<delete id="personDelete">
+		DELETE from person
+		WHERE person.rank = #{rank} AND person.create_by = #{createBy.id}
+	</delete>
+	
+	<!-- 删除人物后修改rank -->
+	<update id="personUpdate">
+		UPDATE person 
+		SET person.rank = person.rank - 1 
+		WHERE person.rank > #{rank} AND person.create_by = #{createBy.id}
+	</update>
+	
+	
+	<!-- 删除人物后修改Source -->
+	<update id="personRelationSourceUpdate">
+		UPDATE person_relation 
+		SET person_relation.source = person_relation.source - 1 
+		WHERE person_relation.source > #{rank} AND person_relation.create_by = #{createBy.id}
+	</update>
+	
+	
+	<!-- 删除人物后修改Target -->
+	<update id="personRelationTargetUpdate">
+		UPDATE person_relation 
+		SET person_relation.target = person_relation.target - 1 
+		WHERE person_relation.target > #{rank} AND person_relation.create_by = #{createBy.id}
+	</update>
+	
+	<!-- 清除所有中心人物 -->
+	<update id="personZXclear">
+		UPDATE person 
+		SET person.category = 1 
+		WHERE person.create_by = #{createBy.id}
+	</update>
+	
+	<!-- 设置中心人物 -->
+	<update id="personAddZX">
+		UPDATE person 
+		SET person.category = 0 
+		WHERE person.create_by = #{createBy.id} AND person.id = #{id}
+	</update>
 	
 	<!-- 获得此人物的关系列表-->
 	<select id="findRelation" resultType="com.zhibolg.zhibo.entity.Person">
@@ -101,9 +148,9 @@
 			<include refid="personRelationColumns"/>
 		FROM person_relation a
 		<where>
-		a.create_by = #{createBy.id} AND
 		target = #{rank} OR
-		source = #{rank}
+		source = #{rank} AND
+		a.create_by = #{createBy.id}
 		</where>
 	</select>
 	

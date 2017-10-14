@@ -48,8 +48,39 @@ public class PersonService extends ServiceBase<DaoBase<Person>, Person>{
 		return dao.findRelation(person);
 	}
 
-	public List<Person> findListPersonByRank(List<Integer> keyList) {
-		return dao.findListPersonByRank(keyList);
+	public void insertPersonRelation(Person person) {
+		
+		User user = UserUtil.getUser();
+		Date d = new Date(System.currentTimeMillis());
+		person.setCreateDate(d);
+		person.setUpdateDate(d);
+		person.setCreateBy(user);
+		person.setUpdateBy(user);
+		person.setId(UUID.randomUUID().toString().replace("-", ""));
+		
+		dao.insertPersonRelation(person);
 	}
+
+	public List<Person> findListPersonRelationXinXi(Person person) {
+		
+		return dao.findListPersonRelationXinXi(person);
+	}
+
+	public void relationDelete(String rid) {
+		dao.relationDelete(rid);
+	}
+
+	public void personDelete(Person person) {
+		dao.personDelete(person);
+		dao.personUpdate(person);
+		dao.personRelationSourceUpdate(person);
+		dao.personRelationTargetUpdate(person);
+	}
+
+	public void personAddZX(Person person) {
+		dao.personZXclear(person);
+		dao.personAddZX(person);
+	}
+
 
 }

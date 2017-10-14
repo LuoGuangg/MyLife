@@ -43,54 +43,6 @@
 	<script src="${ctxResources}/js/zhibo/person/person.js"></script>
 	<script src="${ctxResources}/js/layer.js"></script>
 	<script src="${ctxResources}/layui.js"></script>
-	
-	<script type="text/javascript">
-	
-		function personAdd(){
-			layer.open({
-			  type: 1 //Page层类型
-			  ,area: ['600px', '400px']
-			  ,title: '添加人物'
-			  ,shade: 0.6 //遮罩透明度
-			  ,maxmin: true //允许全屏最小化
-			  ,anim: 1 //0-6的动画形式，-1不开启
-			  ,content: '<div class="register">'+
-			  				'<form:form modelAttribute="person" method="post" action="${ctx}/person/personSave.html" onsubmit="return checkPerson();">'+
-			  					'<form:input path="name" id="name" placeholder="姓名：" onblur="nameMouseOver();" /><div id="name_div"></div><br />'+
-			  					'<form:radiobutton class="personSex" path="sex" value="男" label="男" checked="checked" /><form:radiobutton class="personSex" path="sex" value="女" label="女" /><br />'+
-			  					'<form:input path="phone" id="phone" placeholder="电话：" /><div id="phone_div"></div><br />'+
-			  					'<form:input path="qq" id="qq" placeholder="QQ：" /><div id="qq_div"></div><br />'+
-			  					'<form:input path="birth" id="birth" placeholder="生日："  /><div id="birth_div"></div><br />'+
-			  					'<input type="submit" id="save" value="保存" /><div id="save_div"></div><br />'+
-			  				'</form:form>'+
-			  			'</div>'
-			}); 
-		}
-	
-		function personRelationAdd(){
-			layer.open({
-			  type: 1 //Page层类型
-			  ,area: ['600px', '400px']
-			  ,title: '添加人物'
-			  ,shade: 0.6 //遮罩透明度
-			  ,maxmin: true //允许全屏最小化
-			  ,anim: 1 //0-6的动画形式，-1不开启
-			  ,content: '<div class="register">'+
-			  				'<form:form modelAttribute="person" method="post" action="${ctx}/person/personRelationSave.html" onsubmit="return checkPersonRelation();">'+
-			  					'<form:input path="name" id="name" placeholder="姓名：" onblur="nameMouseOver();" /><div id="name_div"></div><br />'+
-			  					'<form:radiobutton class="personSex" path="sex" value="男" label="男" checked="checked" /><form:radiobutton class="personSex" path="sex" value="女" label="女" /><br />'+
-			  					'<form:input path="phone" id="phone" placeholder="电话：" /><div id="phone_div"></div><br />'+
-			  					'<form:input path="qq" id="qq" placeholder="QQ：" /><div id="qq_div"></div><br />'+
-			  					'<form:input path="birth" id="birth" placeholder="生日："  /><div id="birth_div"></div><br />'+
-			  					'<input type="submit" id="save" value="保存" /><div id="save_div"></div><br />'+
-			  				'</form:form>'+
-			  			'</div>'
-			}); 
-		}
-		
-	</script>
-	
-	
 	<script src="${ctxResources}/js/zhibo/zhibo.js"></script>
 	<script src="${ctxResources}/js/echarts/echarts.js"></script>
 	<script type="text/javascript">

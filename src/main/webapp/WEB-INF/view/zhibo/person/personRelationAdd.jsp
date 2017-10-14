@@ -13,7 +13,6 @@
 
 <link rel="stylesheet" href="${ctxResources}/css/layui.css">
 <link rel="stylesheet" href="${ctxResources}/css/admin/admin.css">
-<link rel="stylesheet" href="${ctxResources}/css/person/person.css">
 
 </head>
 <body>
@@ -36,50 +35,30 @@
 		<!-- 内容主体区域 -->
 		<div style="padding: 15px;">
 				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
-				  <legend>人物列表</legend>
+				  <legend>人物关系添加</legend>
 				</fieldset>  
-				<a href="${ctx}/person/personAdd.html">添加人物</a>
-				<table class="layui-table">
-				  <colgroup>
-				    <col width="11%">
-				    <col width="11%">
-				    <col width="11%">
-				    <col width="11%">
-				    <col width="11%">
-				    <col width="11%">
-				    <col width="20%">
-				  </colgroup>
-				  <thead>
-				    <tr>
-				      <th>姓名</th>
-				      <th>性别</th>
-				      <th>生日</th>
-				      <th>电话</th>
-				      <th>QQ</th>
-				      <th>创建时间</th>
-				      <th>操作</th>
-				    </tr> 
-				  </thead>
-				  <tbody>
-				  <c:forEach items="${personList}" var="list">
-				    <tr>
-				      <td>${list.name}</td>
-				      <td>${list.birth}</td>
-				      <td>${list.sex}</td>
-				      <td>${list.phone}</td>
-				      <td>${list.qq}</td>
-				      <td>${list.createDateString}</td>
-				      <td>
-				      	<a href="${ctx}/person/personAdd.html">添加人物</a>
-				      	<a href="${ctx}/person/personDelete.html?id=${list.id}">删除人物</a>
-				      	<a href="${ctx}/person/personRelationAdd.html?id=${list.id}">添加关系</a>
-				      	<a href="${ctx}/person/personRelationList.html?id=${list.id}">查看关系</a>
-				      	<a href="${ctx}/person/personAddZX.html?id=${list.id}">添加中心</a>
-				      </td>
-				    </tr>
-				  </c:forEach>
-				  </tbody>
-				</table>
+				
+				<div class="personForm">
+	  				<form:form modelAttribute="person" method="post" action="${ctx}/person/personRelationSave.html">
+	  					<label>角色：</label>
+	  					<form:select path="source" >
+							<form:option value="${person.rank}" label="${person.name}" />
+						</form:select>
+						
+						<label>角色：</label>
+	  					<form:select path="target" >
+	  						<c:forEach items="${personList}" var="list">
+								<form:option value="${list.rank}" label="${list.name}" />
+	  						</c:forEach>
+						</form:select>
+						
+						<label>建立关系：</label>
+						<form:input path="relation"/>
+						<input type="submit" value="添加关系" />
+						
+	  				</form:form>
+	  			</div>
+				
 		</div>
 	</div>
 
@@ -89,6 +68,7 @@
 	</div>
 </div>
 
+<script src="${ctxResources}/js/zhibo/person/person.js"></script>
 <script src="${ctxResources}/layui.js"></script>
 <script src="${ctxResources}/js/admin/admin.js"></script>
 	

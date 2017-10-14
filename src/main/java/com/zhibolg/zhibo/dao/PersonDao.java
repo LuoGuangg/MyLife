@@ -36,8 +36,46 @@ public interface PersonDao extends DaoBase<Person>{
 	List<Person> findRelation(Person person);
 
 	/*
-	 * 排除以及有关系的人物，获得其他人物
+	 * 插入角色之间的关系
 	 */
-	List<Person> findListPersonByRank(List<Integer> keyList);
+	void insertPersonRelation(Person person);
+
+	/*
+	 * 查询关系列表的信息
+	 */
+	List<Person> findListPersonRelationXinXi(Person person);
+
+	/*
+	 * 删除关系
+	 */
+	void relationDelete(String rid);
+
+	/*
+	 * 删除角色
+	 */
+	void personDelete(Person person);
+	/*
+	 * 删除角色后修改rank
+	 */
+	void personUpdate(Person person);
+	/*
+	 * 删除角色后修改source
+	 */
+	void personRelationSourceUpdate(Person person);
+	/*
+	 * 删除角色后修改target
+	 */
+	void personRelationTargetUpdate(Person person);
+
+	/*
+	 * 清除所有中心人物
+	 */
+	void personZXclear(Person person);
+	
+	/*
+	 * 设置中心人物
+	 */
+	void personAddZX(Person person);
+
 
 }

@@ -1,6 +1,7 @@
 package com.zhibolg.zhibo.controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -102,7 +103,72 @@ public class PersonRelationController extends ControllerBase{
 		return "zhibo/person/personAdd";
 	}
 	
+	/**
+	 * 设置中心人物
+	 * @param person
+	 * @return
+	 */
+	@RequestMapping(value = "personAddZX")
+	public String personAddZX(Person person, Model model) {
+		/*
+		 * 获取当前用户
+		 */
+		User user = UserUtil.getUser();
+		model.addAttribute("user", user);
+		person.setCreateBy(user);
+		
+		log.info(person);
+		personService.personAddZX(person);
+		
+		return "redirect:/person/personRelation.html";
+	}
 	
+	
+	@RequestMapping(value = "personDelete")
+	public String personDelete(Person person, Model model) {
+		log.info(person);
+		/*
+		 * 获取当前用户
+		 */
+		User user = UserUtil.getUser();
+		model.addAttribute("user", user);
+		person.setCreateBy(user);
+		
+		personService.personDelete(person);
+		
+		
+		return "redirect:/person/personGuanLi.html";
+	}
+
+	/**
+	 * 人物关系列表
+	 * @param person
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "personRelationList")
+	public String personRelationList(Person person, Model model) {
+		log.info(person);
+		/*
+		 * 获取当前用户
+		 */
+		User user = UserUtil.getUser();
+		model.addAttribute("user", user);
+		person.setCreateBy(user);
+		
+		List<Person> personRelationlist = personService.findListPersonRelationXinXi(person);
+		model.addAttribute("personRelationlist", personRelationlist);
+		log.info(personRelationlist);
+		
+		return "zhibo/person/personRelationList";
+	}
+	
+	/**
+	 * 人物关系添加页面
+	 * @param person
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "personRelationAdd")
 	public String personRelationAdd(Person person, Model model) {
 		
@@ -116,15 +182,38 @@ public class PersonRelationController extends ControllerBase{
 		person.setCreateBy(user);
 		
 		List<Person> RelationList = personService.findRelation(person);
+		log.info(RelationList);
+		//获得所有关系角色
 		List<Integer> keyList = new ArrayList<Integer>();
 		for(Person p: RelationList) {
-			keyList.add(p.getSource());
-			keyList.add(p.getTarget());
+			keyList.add(Integer.parseInt(p.getSource()));
+			keyList.add(Integer.parseInt(p.getTarget()));
 		}
 		log.info(keyList);
-		List<Person> personList = personService.findListPersonByRank(keyList);
+		//删除已有关系的角色
+		List<Person> personList = personService.findListPerson(person);
+		for (int i = personList.size() - 1; i >= 0; i-- ) {
+			Person p = personList.get(i);
+			log.info(p);
+			for (Integer k: keyList) {
+				if (p.getRank() == k) {
+					personList.remove(p);  
+				}
+			}
+			if (person.getRank() == p.getRank()) {
+				personList.remove(p);
+			}
+		}
 		log.info(personList);
-		 return "";
+		model.addAttribute("personList", personList);
+		
+		return "zhibo/person/personRelationAdd";
+	}
+
+	@RequestMapping(value = "personRelationDelete")
+	public String personRelationDelete(@RequestParam("rid") String rid) {
+		personService.relationDelete(rid);
+		return "redirect:/person/personRelationList.html";
 	}
 	
 	/**
@@ -156,6 +245,18 @@ public class PersonRelationController extends ControllerBase{
 		person.setCategory("1");
 		
 		personService.insertPerson(person);
+		return "redirect:/person/personRelation.html";
+	}
+	
+	/**
+	 * 保存人物关系
+	 * @param person
+	 * @return
+	 */
+	@RequestMapping(value = "personRelationSave")
+	public String personRelationSave(Person person) {
+		log.info(person);
+		personService.insertPersonRelation(person);
 		return "redirect:/person/personRelation.html";
 	}
 	
