@@ -16,11 +16,13 @@
 
 </head>
 <body>
-<form:form id="pageForm" action="${ctx}/admin.html" method="post">
+
+<form:form id="pageForm" action="${ctx}/admin/ip.html" method="post">
 	<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}" />
 	<input id="pageSize" name="pageSize" type="hidden"
 		value="${page.pageSize}" />
 </form:form>
+
 
 <div class="layui-layout layui-layout-admin">
 	<div class="layui-header">
@@ -48,17 +50,7 @@
 			<li class="layui-nav-item"><a href="javascript:;"> <img
 					src="http://t.cn/RCzsdCq" class="layui-nav-img"> ${user.userName}
 			</a>
-			<!--
-				<dl class="layui-nav-child">
-					<dd>
-						<a href="">基本资料</a>
-					</dd>
-					<dd>
-						<a href="">安全设置</a>
-					</dd>
-				</dl>
-				  -->
-				  </li>
+			</li>
 			<li class="layui-nav-item"><a href="">退了</a></li>
 		</ul>
 	</div>
@@ -67,8 +59,8 @@
 		<div class="layui-side-scroll">
 		
 			<ul class="layui-nav layui-nav-tree" lay-filter="test">
-				<li class="layui-nav-item leftSelect"><a href="${ctx}/admin.html">用户信息</a></li>
-				<li class="layui-nav-item"><a href="${ctx}/admin/ip.html">访问情况</a></li>
+				<li class="layui-nav-item"><a href="${ctx}/admin.html">用户信息</a></li>
+				<li class="layui-nav-item leftSelect"><a href="${ctx}/admin/ip.html">访问情况</a></li>
 			</ul>
 		</div>
 	</div>
@@ -77,48 +69,10 @@
 		<!-- 内容主体区域 -->
 		<div style="padding: 15px;">
 				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
-				  <legend>访问列表</legend>
+				  <legend>IP统计显示</legend>
 				</fieldset>  
+				<div id="main" style="width: 100%;height:100%;"></div>
 				
-				<form:form id="searchForm" modelAttribute="user" action="admin.html" method="post">
-					<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}" />
-					<input id="pageSize" name="pageSize" type="hidden"
-						value="${page.pageSize}" />
-					<label>用户名</label>
-					<input  id="userName"  name="userName" class="searchInput" value="${userFrom.userName}">
-					<button class="layui-btn layui-btn-small" type="submit" value="查询">查询</button>
-				</form:form>
-				 
-				<table class="layui-table">
-				  <colgroup>
-				    <col width="20%">
-				    <col width="20%">
-				    <col width="20%">
-				    <col width="20%">
-				    <col width="5%">
-				  </colgroup>
-				  <thead>
-				    <tr>
-				      <th>用户名</th>
-				      <th>邮箱</th>
-				      <th>权限</th>
-				      <th>创建时间</th>
-				      <th>操作</th>
-				    </tr> 
-				  </thead>
-				  <tbody>
-				  <c:forEach items="${page.results}" var="list">
-				    <tr>
-				      <td>${list.userName}</td>
-				      <td>${list.email}</td>
-				      <td>${list.powerString}</td>
-				      <td>${list.createDateString}</td>
-				      <td><span class="pointer" onclick="blacklist('${list.id}')"><c:if test="${list.black == 0}">拉黑</c:if><c:if test="${list.black == 1}">解封</c:if></span></td>
-				    </tr>
-				  </c:forEach>
-				  </tbody>
-				</table>
-				<div class="pagination pages">${page}</div> 
 		</div>
 	</div>
 
@@ -130,7 +84,58 @@
 
 <script src="${ctxResources}/layui.js"></script>
 <script src="${ctxResources}/js/admin/admin.js"></script>
-	
+<script src="${ctxResources}/js/echarts/echarts.min.js"></script>
+<script type="text/javascript">
+		var myChart = echarts.init(document.getElementById('main'));
+
+		//data
+		var data = [
+		  <c:forEach items="${vistIpList}" var="list">
+            ${list.num},
+          </c:forEach>  
+		];
+		//option
+		option = {
+		    title: {
+		        text: '近15天访问统计'
+		    },
+		    tooltip : {
+		        trigger: 'axis'
+		    },    
+		    xAxis: {
+		        data: [
+		        <c:forEach items="${vistIpList}" var="list">
+		             '${list.createDateString}',
+		        </c:forEach> 
+		        ]
+		    },
+		    yAxis: {},
+		    series: [{
+		        type: 'line',
+		        data:data,
+		        markPoint: {
+		            data: [
+		                {type: 'max', name: '最大值'},
+		                {type: 'min', name: '最小值'}
+		            ]
+		        },
+		        markLine: {
+		            smooth: true,
+		                    effect: {
+		                        show: true
+		                    },
+		                    distance: 10,
+		            label: {
+		                normal: {
+		                    position: 'middle'
+		                }
+		            },
+		            symbol: ['none', 'none'],
+		        }
+		    }]
+		};
+	    myChart.setOption(option);  
+	</script>	
 <script>
 	//用户下拉
 	layui.use('element', function() {
@@ -138,5 +143,6 @@
 
 	});
 </script>
+
 </body>
 </html>

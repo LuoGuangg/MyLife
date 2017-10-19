@@ -48,7 +48,7 @@ public interface PersonDao extends DaoBase<Person>{
 	/*
 	 * 删除关系
 	 */
-	void relationDelete(String rid);
+	void relationDelete(Person person);
 
 	/*
 	 * 删除角色

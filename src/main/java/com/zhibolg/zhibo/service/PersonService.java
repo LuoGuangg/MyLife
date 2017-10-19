@@ -66,8 +66,8 @@ public class PersonService extends ServiceBase<DaoBase<Person>, Person>{
 		return dao.findListPersonRelationXinXi(person);
 	}
 
-	public void relationDelete(String rid) {
-		dao.relationDelete(rid);
+	public void relationDelete(Person person) {
+		dao.relationDelete(person);
 	}
 
 	public void personDelete(Person person) {

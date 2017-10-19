@@ -50,6 +50,7 @@
 			<li class="layui-nav-item"><a href="javascript:;"> <img
 					src="http://t.cn/RCzsdCq" class="layui-nav-img"> ${user.userName}
 			</a>
+			<!-- 
 				<dl class="layui-nav-child">
 					<dd>
 						<a href="">基本资料</a>
@@ -57,7 +58,9 @@
 					<dd>
 						<a href="">安全设置</a>
 					</dd>
-				</dl></li>
+				</dl>
+				 -->
+				 </li>
 			<li class="layui-nav-item"><a href="">退了</a></li>
 		</ul>
 	</div>
@@ -68,7 +71,6 @@
 			<ul class="layui-nav layui-nav-tree" lay-filter="test">
 				<li class="layui-nav-item"><a href="${ctx}/admin.html">用户信息</a></li>
 				<li class="layui-nav-item leftSelect"><a href="${ctx}/admin/ip.html">访问情况</a></li>
-				<li class="layui-nav-item"><a href="${ctx}/admin/addDuMa.html">赌马统计</a></li>
 			</ul>
 		</div>
 	</div>
@@ -79,7 +81,7 @@
 				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
 				  <legend>IP列表</legend>
 				</fieldset>  
-				 
+				
 				<form:form id="searchForm" modelAttribute="vistIpFrom" action="${ctx}/admin/ip.html" method="post">
 					<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}" />
 					<input id="pageSize" name="pageSize" type="hidden"
@@ -91,8 +93,9 @@
 					<label>城市</label>
 					<input  id="city"  name="city" class="searchInput" value="${vistIpFrom.city}">
 					<button class="layui-btn layui-btn-small" type="submit" value="查询">查询</button>
+					<a class="layui-btn layui-btn-small" href="${ctx}/admin/ipChart.html" >图表方式显示</a>
 				</form:form>
-				 
+				
 				<table class="layui-table">
 				  <colgroup>
 				    <col width="25%">

@@ -1,5 +1,7 @@
 package com.zhibolg.admin.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import com.zhibolg.admin.entity.VistIp;
@@ -17,5 +19,10 @@ public interface VistIpDao extends DaoBase<VistIp>{
 	 * 判断今天IP是否来过
 	 */
 	VistIp getByDay(VistIp vistIp);
+	
+	/*
+	 * 获得近15天IP访问情况
+	 */
+	List<VistIp> findCountBy(VistIp vistIp);
 
 }

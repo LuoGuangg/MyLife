@@ -44,7 +44,7 @@
 	<script src="${ctxResources}/js/layer.js"></script>
 	<script src="${ctxResources}/layui.js"></script>
 	<script src="${ctxResources}/js/zhibo/zhibo.js"></script>
-	<script src="${ctxResources}/js/echarts/echarts.js"></script>
+	<script src="${ctxResources}/js/echarts/echarts.min.js"></script>
 	<script type="text/javascript">
 		var myChart = echarts.init(document.getElementById('main'));
 		option = {

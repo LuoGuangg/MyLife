@@ -211,9 +211,17 @@ public class PersonRelationController extends ControllerBase{
 	}
 
 	@RequestMapping(value = "personRelationDelete")
-	public String personRelationDelete(@RequestParam("rid") String rid) {
-		personService.relationDelete(rid);
-		return "redirect:/person/personRelationList.html";
+	public String personRelationDelete(Person person,@RequestParam("rid") String rid) {
+		person.setId(rid);
+		/*
+		 * 获取当前用户
+		 */
+		User user = UserUtil.getUser();
+		person.setCreateBy(user);
+		
+		personService.relationDelete(person);
+		
+		return "redirect:/person/personGuanLi.html";
 	}
 	
 	/**

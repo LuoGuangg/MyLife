@@ -15,13 +15,23 @@ public class VistIp extends EntityBase<VistIp>{
 	private String ip;	//ip地址
 	private String country;	//国家
 	private String city;	//城市
-
+	
+	private String num; //访问数
+	
 	private Map<String, String> pageMap = new HashMap<String, String>();
 	
 	public VistIp() {
 		super();
 	}
 	
+	public String getNum() {
+		return num;
+	}
+
+	public void setNum(String num) {
+		this.num = num;
+	}
+
 	public VistIp(String ip, String country, String city) {
 		super();
 		this.ip = ip;

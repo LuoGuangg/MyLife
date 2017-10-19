@@ -45,16 +45,29 @@ public class MessageContentController  extends ControllerBase{
 		return messageContService.get(id);
 	}
 	
+	/**
+	 * 留言保存
+	 * @param messageContent
+	 * @return 放回直播导航列表页面
+	 */
 	@RequestMapping(value = "save")
 	public String save(MessageContent messageContent){
+		
+		//保存留言内容信息
 		messageContService.insert(messageContent);
 		
 		MessageAll messageAll = new MessageAll();
+		
+		//设置留言内容ID
 		messageAll.setContentId(messageContent.getId());
+		
+		//设置留言对象
 		String target = messageContent.getTargetId();
 		if(target != null){
 			messageAll.setTargetId(target.trim());
 		}
+		
+		//保存留言信息
 		messageAllService.insert(messageAll);
 		
 		return "redirect:/ZhiBo.html?index="+messageContent.getGameId();  

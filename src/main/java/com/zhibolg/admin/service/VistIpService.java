@@ -27,4 +27,8 @@ public class VistIpService extends ServiceBase<DaoBase<VistIp>, VistIp>{
 		vistIp.setCreateDate(new Date());
 		return dao.getByDay(vistIp);
 	}
+
+	public List<VistIp> findCountBy(VistIp vistIp) {
+		return dao.findCountBy(vistIp);
+	}
 }

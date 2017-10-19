@@ -86,16 +86,16 @@
 	<!-- 查询人物关系具体信息列表 -->
 	<select id="findListPersonRelationXinXi" resultType="com.zhibolg.zhibo.entity.Person">
 		SELECT p.id, p.relation, p.create_by AS "create_by.id", p.create_date AS "createDate",
-		(select person.`name` from person where person.rank=p.source) AS "source", 
-		(select person.`name` from person where person.rank=p.target) AS "target" 
-		from person_relation p WHERE p.source = #{rank} OR p.target = #{rank}
+		(select person.`name` from person where person.rank=p.source  AND person.create_by = #{createBy.id}) AS "source", 
+		(select person.`name` from person where person.rank=p.target  AND person.create_by = #{createBy.id}) AS "target" 
+		from person_relation p WHERE p.source = #{rank}  AND p.create_by = #{createBy.id} OR p.target = #{rank}
 		AND p.create_by = #{createBy.id}
 	</select>
 	
 	<!-- 删除人物关系 -->
 	<delete id="relationDelete">
 		DELETE from person_relation
-		WHERE person_relation.id = #{rid} AND person_relation.create_by = #{createBy.id}
+		WHERE person_relation.id = #{id} AND person_relation.create_by = #{createBy.id}
 	</delete>
 	
 	

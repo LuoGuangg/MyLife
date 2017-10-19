@@ -1,5 +1,6 @@
 package com.zhibolg.admin.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,7 +41,6 @@ public class AdminController extends ControllerBase{
 	private UserService userService;
 	@Autowired
 	private VistIpService vistIpService;
-	
 	@Autowired
 	private MaService maService;
 	
@@ -119,11 +119,24 @@ public class AdminController extends ControllerBase{
 		return "";
 	}
 	
+	@RequestMapping(value = "ipChart")
+	public String ipChart(Model model) {
+		model.addAttribute("user", UserUtil.getUser());
+		List<VistIp> vistIpList = vistIpService.findCountBy(new VistIp());
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		for (VistIp v: vistIpList) {
+			v.setCreateDateString(format.format(v.getCreateDate()));
+		}
+		
+		model.addAttribute("vistIpList", vistIpList);
+		return "admin/ipCharts";
+	}
+	
+	
+	
 	/*
 	 * 关于赌马
 	 */
-	
-
 	@RequestMapping(value = "addDuMa")
 	public String addDuMa(Model model,@RequestParam(required = false) String maName1,
 			@RequestParam(required = false) String maColor1,

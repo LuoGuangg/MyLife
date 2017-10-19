@@ -59,6 +59,15 @@
 		</where>
 	</select>
 	
+	<!-- 获得近15天IP访问情况 -->
+	<select id="findCountBy" resultType="com.zhibolg.admin.entity.VistIp">
+		SELECT a.count AS num , a.create_date AS "createDate" FROM day_ip a
+		<where>
+		DATE_SUB(CURDATE(),INTERVAL '15' DAY) &lt;= date(a.create_date) 
+		</where>
+		order by a.create_date 
+	</select>
+	
 	<update id="update">
 		UPDATE visit_ip SET
 			ip = #{ip},
